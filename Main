@@ -2,6 +2,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
@@ -17,10 +18,18 @@ public class Main extends JFrame {
 		
 		private void iniciarComponentes()
 		{
-			JPanel panel =new JPanel();
+			JPanel panel = new JPanel();
 			
-			panel.setBackground(Color.PINK);
+			// panel.setBackground(Color.PINK);
+			panel.setLayout(null);
 			this.getContentPane().add(panel);
+			
+			
+			JLabel etiqueta = new JLabel("DATALIVE");
+			etiqueta.setText("DASDA");
+			etiqueta.setBounds(10,10,50,30);
+			etiqueta.setForeground(Color.red);
+			panel.add(etiqueta);
 		}
 
 }
