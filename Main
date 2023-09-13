@@ -1,35 +1,11 @@
-
-import java.awt.Color;
-import java.awt.Dimension;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.awt.*;
+import javax.swing.*;
 
 
-public class Main extends JFrame {
-		public Main() {
-			setBounds(100,200,500,500); //Setea la posicion del eje x e y de la ventana y ademas los tamaños de la ventana
-			setDefaultCloseOperation(EXIT_ON_CLOSE); //Permite salir de la ventana
-			setTitle("DataLive"); //Establece el titulo
-			
-			//this.getContentPane().setBackground(Color.PINK);
-			iniciarComponentes();
-		}
+public class Main {
+	public static void main(String[] args) {
+		var ventana = new Pepito();
 		
-		private void iniciarComponentes()
-		{
-			JPanel panel = new JPanel();
-			
-			// panel.setBackground(Color.PINK);
-			panel.setLayout(null);
-			this.getContentPane().add(panel);
-			
-			
-			JLabel etiqueta = new JLabel("DATALIVE");
-			etiqueta.setText("DASDA");
-			etiqueta.setBounds(10,10,50,30);
-			etiqueta.setForeground(Color.red);
-			panel.add(etiqueta);
-		}
-
+		ventana.setVisible(true);
+	}
 }
