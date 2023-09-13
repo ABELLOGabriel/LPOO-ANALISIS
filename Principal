@@ -1,8 +1,40 @@
+import java.awt.*;
+import javax.swing.*;
 
-public class Principal {
-	public static void main(String[] args) {
-		Main vl = new Main();
+
+public class Pepito extends JFrame {
+	public Pepito() {
+		setBounds(100,200,700,700); //Setea la posicion del eje x e y de la ventana y ademas los tamaños de la ventana
+		setDefaultCloseOperation(EXIT_ON_CLOSE); //Permite salir de la ventana
+		setTitle("DataLive"); //Establece el titulo
 		
-		vl.setVisible(true);
+		//this.getContentPane().setBackground(Color.PINK);
+		iniciarComponentes();
 	}
+	
+	private void iniciarComponentes()
+	{
+		var panel = new JPanel();
+		
+		// panel.setBackground(Color.PINK);
+		panel.setLayout(null);
+		this.getContentPane().add(panel);
+		
+		
+		JLabel etiqueta = new JLabel("DATALIVE");//TITULO
+		etiqueta.setText("Hola");//TEXTO
+		etiqueta.setBounds(10,10,500,30);//LOS TAMAÑOS DE LA VENTANA
+		etiqueta.setForeground(Color.red); //COLOR DEL TEXTO
+		etiqueta.setOpaque(true);//BOOLEANO PARA PINTAR EL FONDO DEL TEXTO
+		etiqueta.setBackground(Color.BLUE);//COLOR DEL FONDO DEL TEXTO
+		etiqueta.setFont(new Font("Cooper",0,30));
+		etiqueta.setHorizontalAlignment(SwingConstants.CENTER);//Alinea el texto
+		panel.add(etiqueta);
+		
+		
+		var etiqueta2 = new JLabel(new ImageIcon("Proyecto2.jpg"));
+		etiqueta2.setBounds(10, 80, 500, 500);
+		panel.add(etiqueta2);
+	}
+
 }
