@@ -32,8 +32,10 @@ public class Pepito extends JFrame {
 		panel.add(etiqueta);
 		
 		
-		var etiqueta2 = new JLabel(new ImageIcon("Proyecto2.jpg"));
-		etiqueta2.setBounds(10, 80, 500, 500);
+		var imagen = new ImageIcon("C:\\Users\\Alumno\\eclipse-workspace\\Ventana\\src//pelota.jpg");
+		var etiqueta2 = new JLabel();
+		etiqueta2.setBounds(10, 80, 300, 300);
+		etiqueta2.setIcon(new ImageIcon(imagen.getImage()));
 		panel.add(etiqueta2);
 	}
 
