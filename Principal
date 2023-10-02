@@ -3,6 +3,8 @@ import javax.swing.*;
 
 
 public class Pepito extends JFrame {
+	public JPanel panel;
+	
 	public Pepito() {
 		setBounds(100,200,700,700); //Setea la posicion del eje x e y de la ventana y ademas los tamaños de la ventana
 		setDefaultCloseOperation(EXIT_ON_CLOSE); //Permite salir de la ventana
@@ -14,13 +16,19 @@ public class Pepito extends JFrame {
 	
 	private void iniciarComponentes()
 	{
-		var panel = new JPanel();
-		
+		CrearPaneles();
+		//CrearEtiquetas();
+		CrearBotones();
+	}
+	
+	private void CrearPaneles() {
+		panel = new JPanel();
 		panel.setBackground(Color.PINK);
 		panel.setLayout(null);
 		this.getContentPane().add(panel);
-		
-		
+	}
+	
+	private void CrearEtiquetas(){
 		JLabel etiqueta = new JLabel("DATALIVE");//TITULO
 		etiqueta.setText("Hola");//TEXTO
 		etiqueta.setBounds(10,10,500,30);//LOS TAMAÑOS DE LA VENTANA
@@ -31,12 +39,22 @@ public class Pepito extends JFrame {
 		etiqueta.setHorizontalAlignment(SwingConstants.CENTER);//Alinea el texto
 		panel.add(etiqueta);
 		
-		
-		var imagen = new ImageIcon("C:\\Users\\Alumno\\eclipse-workspace\\Pizzeria\\src\\logo.jpg");
+		var imagen = new ImageIcon("C:\\Users\\Alumno\\eclipse-workspace\\Pizzeria\\src\\Logo.png");
 		var etiqueta2 = new JLabel();
 		etiqueta2.setBounds(10, 80, 500, 500);
-		etiqueta2.setIcon(new ImageIcon(imagen.getImage()));
+		etiqueta2.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH)));
 		panel.add(etiqueta2);
 	}
-
+	
+	private void CrearBotones() {
+		JButton boton1 = new JButton("Hola");
+		boton1.setBounds(100, 100, 200, 100);
+		boton1.setEnabled(true);
+		boton1.setMnemonic('a'); // alt + letra
+		boton1.setForeground(Color.darkGray);
+		panel.add(boton1);
+		
+		
+	}
+		
 }
