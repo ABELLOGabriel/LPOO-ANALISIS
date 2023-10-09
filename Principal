@@ -6,7 +6,7 @@ public class Pepito extends JFrame {
 	public JPanel panel;
 	
 	public Pepito() {
-		setBounds(100,200,700,700); //Setea la posicion del eje x e y de la ventana y ademas los tamaños de la ventana
+		setBounds(100,200,400,400); //Setea la posicion del eje x e y de la ventana y ademas los tamaños de la ventana
 		setDefaultCloseOperation(EXIT_ON_CLOSE); //Permite salir de la ventana
 		setTitle("DataLive"); //Establece el titulo
 		
@@ -23,7 +23,7 @@ public class Pepito extends JFrame {
 	
 	private void CrearPaneles() {
 		panel = new JPanel();
-		panel.setBackground(Color.PINK);
+		panel.setBackground(Color.gray);
 		panel.setLayout(null);
 		this.getContentPane().add(panel);
 	}
@@ -33,8 +33,8 @@ public class Pepito extends JFrame {
 		etiqueta.setText("Hola");//TEXTO
 		etiqueta.setBounds(10,10,500,30);//LOS TAMAÑOS DE LA VENTANA
 		etiqueta.setForeground(Color.red); //COLOR DEL TEXTO
-		etiqueta.setOpaque(true);//BOOLEANO PARA PINTAR EL FONDO DEL TEXTO
-		etiqueta.setBackground(Color.BLUE);//COLOR DEL FONDO DEL TEXTO
+		// etiqueta.setOpaque(true);//BOOLEANO PARA PINTAR EL FONDO DEL TEXTO
+		// etiqueta.setBackground(Color.BLUE);//COLOR DEL FONDO DEL TEXTO
 		etiqueta.setFont(new Font("Cooper",0,30));
 		etiqueta.setHorizontalAlignment(SwingConstants.CENTER);//Alinea el texto
 		panel.add(etiqueta);
@@ -47,13 +47,20 @@ public class Pepito extends JFrame {
 	}
 	
 	private void CrearBotones() {
-		JButton boton1 = new JButton("Hola");
-		boton1.setBounds(100, 100, 200, 100);
+		JButton boton1 = new JButton("Iniciar Sesion");
+		boton1.setBounds(100, 150, 200, 50);
 		boton1.setEnabled(true);
-		boton1.setMnemonic('a'); // alt + letra
+		boton1.setMnemonic('r'); // alt + letra
 		boton1.setForeground(Color.darkGray);
 		panel.add(boton1);
 		
+		JButton boton2 = new JButton();
+		boton2.setBounds(0, 0, 75, 75);
+		// boton2.setOpaque(true);
+		ImageIcon img = new ImageIcon("C:\\Users\\Alumno\\eclipse-workspace\\Pizzeria\\src\\Logo.png");
+		boton2.setIcon(new ImageIcon(img.getImage().getScaledInstance(boton2.getWidth(), boton2.getHeight(), Image.SCALE_SMOOTH)) );
+		// boton2.setBackground(Color.yellow);
+		panel.add(boton2);
 		
 	}
 		
