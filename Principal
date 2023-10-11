@@ -1,23 +1,22 @@
 import java.awt.*;
 import javax.swing.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Pepito extends JFrame {
 	public JPanel panel;
 	
 	public Pepito() {
-		setBounds(100,200,400,400); //Setea la posicion del eje x e y de la ventana y ademas los tamaños de la ventana
-		setDefaultCloseOperation(EXIT_ON_CLOSE); //Permite salir de la ventana
-		setTitle("DataLive"); //Establece el titulo
-		
-		//this.getContentPane().setBackground(Color.PINK);
+		setBounds(100,200,400,400); 
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("DataLive");
 		iniciarComponentes();
+		setVisible(true);
 	}
 	
 	private void iniciarComponentes()
 	{
 		CrearPaneles();
-		//CrearEtiquetas();
 		CrearBotones();
 	}
 	
@@ -28,24 +27,6 @@ public class Pepito extends JFrame {
 		this.getContentPane().add(panel);
 	}
 	
-	private void CrearEtiquetas(){
-		JLabel etiqueta = new JLabel("DATALIVE");//TITULO
-		etiqueta.setText("Hola");//TEXTO
-		etiqueta.setBounds(10,10,500,30);//LOS TAMAÑOS DE LA VENTANA
-		etiqueta.setForeground(Color.red); //COLOR DEL TEXTO
-		// etiqueta.setOpaque(true);//BOOLEANO PARA PINTAR EL FONDO DEL TEXTO
-		// etiqueta.setBackground(Color.BLUE);//COLOR DEL FONDO DEL TEXTO
-		etiqueta.setFont(new Font("Cooper",0,30));
-		etiqueta.setHorizontalAlignment(SwingConstants.CENTER);//Alinea el texto
-		panel.add(etiqueta);
-		
-		var imagen = new ImageIcon("C:\\Users\\Alumno\\eclipse-workspace\\Pizzeria\\src\\Logo.png");
-		var etiqueta2 = new JLabel();
-		etiqueta2.setBounds(10, 80, 500, 500);
-		etiqueta2.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH)));
-		panel.add(etiqueta2);
-	}
-	
 	private void CrearBotones() {
 		JButton boton1 = new JButton("Iniciar Sesion");
 		boton1.setBounds(100, 150, 200, 50);
@@ -53,6 +34,18 @@ public class Pepito extends JFrame {
 		boton1.setMnemonic('r'); // alt + letra
 		boton1.setForeground(Color.darkGray);
 		panel.add(boton1);
+		
+		boton1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFrame ventanaEmergente = new JFrame("Ventana Emergente");
+                ventanaEmergente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                ventanaEmergente.setSize(200, 100);
+                ventanaEmergente.setLocationRelativeTo(null); // Centrar la ventana emergente
+                ventanaEmergente.setVisible(true);
+                
+			}
+		});
 		
 		JButton boton2 = new JButton();
 		boton2.setBounds(0, 0, 75, 75);
@@ -63,5 +56,4 @@ public class Pepito extends JFrame {
 		panel.add(boton2);
 		
 	}
-		
 }
