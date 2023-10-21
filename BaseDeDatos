@@ -81,6 +81,8 @@ INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023
 
 CREATE TABLE PEDIDOS(
     COD_PEDIDOS int auto_increment unique not null,
+    producto varchar(50) not null,
+    cantidad int not null,
     ID_STOCK int unique not null,
     ID_CLIENTE int unique not null,
     TOTAL int not null,
