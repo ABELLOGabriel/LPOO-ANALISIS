@@ -2,74 +2,81 @@ package Datalive;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Ventana extends JFrame{
+public class Ventanalistas extends JFrame{
 	private static final long serialVersionUID = 1L;
 	public JPanel panel;
 	
-	public Ventana(){
-		setSize(500, 500);
+	@SuppressWarnings("static-access")
+	public Ventanalistas(){
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("DATALIVE");
-		setLocationRelativeTo(null);
-		this.getContentPane().setBackground(Color.GRAY);
+		setTitle("Operaciones");
+		
+		this.getContentPane().setBackground(Color.WHITE);
+		this.setExtendedState(this.MAXIMIZED_BOTH);
 		InicioComponentes();
 	}
 	
 	public void InicioComponentes(){
 		ColocarPaneles();
-		ColocarEtiquetas();
-		ColocarBotones();
+		Colocarbotones();
 	}
 	
 	public void ColocarPaneles(){
 		panel= new JPanel();
-		panel.setBackground(Color.GRAY);
+		panel.setBackground(Color.WHITE);
 		panel.setLayout(null);
 		this.getContentPane().add(panel);
 	}
 	
-	public void ColocarEtiquetas(){
-		
-		JLabel titulo=new JLabel("Moly´s Pizzeria");
-		titulo.setBounds(390, 10, 300, 50);
-		titulo.setForeground(Color.BLACK);
-		titulo.setFont(new Font("arial",Font.PLAIN, 41));
-		panel.add(titulo);
-		
-		ImageIcon logo=new ImageIcon("logo.jpg");
-		JLabel imagen=new JLabel();
-		imagen.setBounds(370, 5, 300, 500);
-		imagen.setIcon(new ImageIcon(logo.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH)));
-		panel.add(imagen);
+	public void Colocarbotones(){
+		 JButton Pedidomostrador = new JButton("Tomar Pedido Mostrador");
+		 JButton Pedidodelivery = new JButton("Tomar Pedido Delivery");
+		 Pedidomostrador.setBounds(995, 30, 210, 30);
+		 Pedidodelivery.setBounds(1210, 30, 210, 30);
+	     Pedidomostrador.setForeground(Color.BLACK);
+	     Pedidodelivery.setForeground(Color.BLACK);
+		 Pedidomostrador.setFont(new Font("arial", Font.BOLD, 15));
+		 Pedidodelivery.setFont(new Font("arial", Font.BOLD, 15));
+		 JButton regresar = new JButton("Regresar");
+		 regresar.setBounds(30, 780, 150, 30);
+		 regresar.setForeground(Color.BLACK);
+		 regresar.setFont(new Font("arial", Font.BOLD, 25));
+		 JButton productos=new JButton("Ver productos");
+		 productos.setBounds(50, 30, 250, 40);
+		 productos.setForeground(Color.BLACK);
+		 productos.setFont(new Font("arial", Font.BOLD, 20));
+		 panel.add(productos);
+		 panel.add(regresar);
+	     panel.add(Pedidomostrador);
+	     panel.add(Pedidodelivery);
+	     
+	     ActionListener desplegador=new ActionListener() {
+	 		@Override
+	 		public void actionPerformed(ActionEvent ae){
+	 			Ventana nuevo=new Ventana();
+	 			nuevo.setVisible(true);
+	 			dispose();
+	 		}
+	 			
+	 		};
+	 		regresar.addActionListener(desplegador);
+	 		
+	 		ActionListener desplegador2=new ActionListener() {
+		 		@Override
+		 		public void actionPerformed(ActionEvent ae){
+		 			Paneles muestreo=new Paneles();
+		 			muestreo.setVisible(true);
+		 		}
+		 			
+		 		};
+		 		Pedidomostrador.addActionListener(desplegador2);
 	}
 	
-	
-	public void ColocarBotones(){
-		JButton inicio=new JButton("Iniciar");
-		inicio.setBounds(450, 430, 150, 80);
-		inicio.setForeground(Color.BLACK);
-		inicio.setFont(new Font("arial", Font.BOLD, 25));
-		panel.add(inicio);
-		
-		ActionListener desplegador=new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent ae){
-			Ventanalistas nuevo=new Ventanalistas();
-			nuevo.setVisible(true);
-		}
-			
-		};
-		inicio.addActionListener(desplegador);
 	}
-	
-}
