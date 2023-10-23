@@ -1,0 +1,20 @@
+package Datalive;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class Paneles extends JFrame{
+	private static final long serialVersionUID = -2546343083853137078L;
+	public JPanel panel;
+	
+	public Paneles(){
+		panel= new JPanel(new BorderLayout());
+		panel.setBackground(Color.GRAY);
+		panel.setLayout(null);
+		this.getContentPane().add(panel);
+	}
+	
+}
