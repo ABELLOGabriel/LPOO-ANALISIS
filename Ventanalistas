@@ -71,8 +71,8 @@ public class Ventanalistas extends JFrame{
 	 		ActionListener desplegador2=new ActionListener() {
 		 		@Override
 		 		public void actionPerformed(ActionEvent ae){
-		 			Paneles muestreo=new Paneles();
-		 			muestreo.setVisible(true);
+		 			@SuppressWarnings("unused")
+					Paneles muestreo=new Paneles();
 		 		}
 		 			
 		 		};
@@ -80,3 +80,4 @@ public class Ventanalistas extends JFrame{
 	}
 	
 	}
+	
