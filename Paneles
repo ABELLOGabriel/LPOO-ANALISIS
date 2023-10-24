@@ -1,20 +1,125 @@
 package Datalive;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class Paneles extends JFrame{
 	private static final long serialVersionUID = -2546343083853137078L;
 	public JPanel panel;
 	
 	public Paneles(){
-		panel= new JPanel(new BorderLayout());
-		panel.setBackground(Color.GRAY);
-		panel.setLayout(null);
-		this.getContentPane().add(panel);
+		Iniciarcomponentes();
 	}
+	
+	public void Iniciarcomponentes(){
+		mostrarFormularioPedidoMostrador();
+	}
+	
+	@SuppressWarnings("null")
+	public void mostrarFormularioPedidoMostrador() {
+       
+        JPanel panel = new JPanel(new BorderLayout());
+		this.getContentPane().add(panel);
+        final JComboBox categoriaCombo = new JComboBox(new String[]{"", "Empanadas", "Pizzas", "Bebidas", "Sandwiches", "Panchos"});
+        JList productosList = new JList();
+        JList PedidoList = new JList();
+        final DefaultListModel productosModel = new DefaultListModel();
+        JSpinner cantidadSpinner = new JSpinner();
+        
+        categoriaCombo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String categoriaSeleccionada = (String) categoriaCombo.getSelectedItem();
+                productosModel.clear();
+                
+                if (categoriaSeleccionada.equals("Empanadas")) {
+                    productosModel.addElement("Empanada de Carne");
+                    productosModel.addElement("Empanada de Pollo");
+                    productosModel.addElement("Empanada de Jamón y Queso");
+                    productosModel.addElement("Empanada de Champiñones");
+                    productosModel.addElement("Empanada de Espinacas");
+                    
+                } else if (categoriaSeleccionada.equals("Bebidas")) {
+                    productosModel.addElement("Coca Cola");
+                    productosModel.addElement("Pepsi");
+                    productosModel.addElement("Paso de los toros");
+                    productosModel.addElement("Sprite");
+                    productosModel.addElement("Seven Up");
+                
+                } else if (categoriaSeleccionada.equals("Pizzas")) {
+                	productosModel.addElement("Pizza Margarita");
+                    productosModel.addElement("Pizza Pepperoni");
+                    productosModel.addElement("Pizza Hawaiana");
+                    productosModel.addElement("Pizza Vegetariana");
+                    productosModel.addElement("Pizza BBQ");
+                    productosModel.addElement("Pizza Muzzarela");
+                
+                } else if (categoriaSeleccionada.equals("Sandwiches")) {
+                	productosModel.addElement("Sandwiche de milanesa");
+                	productosModel.addElement("Sandwiche de bondiola");
+                	productosModel.addElement("Sandwiche de matambre");
+                	productosModel.addElement("Sandwiche de jamon y queso");
+                	
+                } else if (categoriaSeleccionada.equals("Panchos")) {
+                	productosModel.addElement("Pancho extra grande");
+                	productosModel.addElement("Pancho comun");
+                	productosModel.addElement("Pancho venezolano");
+                }
+                
+            }
+        });
+
+        productosList.setModel(productosModel);
+        PedidoList.setModel(productosModel);
+
+        
+        cantidadSpinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+
+       
+        JPanel categoriaPanel = new JPanel(new BorderLayout());
+        JPanel productoPanel = new JPanel(new BorderLayout());
+        JPanel cantidadPanel = new JPanel(new BorderLayout());
+
+        categoriaPanel.add(new JLabel("Seleccione categoría:"), BorderLayout.WEST);
+        categoriaPanel.add(categoriaCombo, BorderLayout.SOUTH);
+
+        productoPanel.add(new JLabel("Productos:"), BorderLayout.WEST);
+        productoPanel.add(new JScrollPane(productosList), BorderLayout.SOUTH);
+
+        cantidadPanel.add(new JLabel("Cantidad" + productosModel),  BorderLayout.WEST);
+        cantidadPanel.add(cantidadSpinner, BorderLayout.SOUTH);
+
+        panel.add(categoriaPanel, BorderLayout.NORTH);
+        panel.add(productoPanel, BorderLayout.CENTER);
+        panel.add(cantidadPanel, BorderLayout.SOUTH);
+        
+        
+        
+        
+        int result = JOptionPane.showConfirmDialog(this, panel, "Tomar Pedido Mostrador", JOptionPane.OK_CANCEL_OPTION);
+
+        if (result == JOptionPane.OK_OPTION) {
+            String categoria = (String) categoriaCombo.getSelectedItem();
+            Object producto = productosList.getSelectedValue();
+            Object cantidad = cantidadSpinner.getValue();
+       
+            String pedido = "Mostrador - Categoría: " + categoria + ", Producto: " + producto + ", Cantidad (Comida): " + cantidad;
+            DefaultListModel pedidosModel = null;
+			pedidosModel.addElement(pedido);
+        }
+    }
+	
 	
 }
