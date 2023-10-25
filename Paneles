@@ -15,27 +15,27 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
-public class Paneles extends JFrame{
+public class Pedidomostrador extends JFrame{
 	private static final long serialVersionUID = -2546343083853137078L;
 	public JPanel panel;
 	
-	public Paneles(){
+	public Pedidomostrador(){
 		Iniciarcomponentes();
 	}
 	
 	public void Iniciarcomponentes(){
-		mostrarFormularioPedidoMostrador();
+		mostrarPedidoMostrador();
 	}
 	
+	
 	@SuppressWarnings("null")
-	public void mostrarFormularioPedidoMostrador() {
-       
+	public void mostrarPedidoMostrador() {
         JPanel panel = new JPanel(new BorderLayout());
 		this.getContentPane().add(panel);
-        final JComboBox categoriaCombo = new JComboBox(new String[]{"", "Empanadas", "Pizzas", "Bebidas", "Sandwiches", "Panchos"});
-        JList productosList = new JList();
-        JList PedidoList = new JList();
-        final DefaultListModel productosModel = new DefaultListModel();
+        final JComboBox<?> categoriaCombo = new JComboBox<Object>(new String[]{"", "Empanadas", "Pizzas", "Bebidas", "Sandwiches", "Panchos"});
+        JList<String> productosList = new JList<String>();
+        JList<String> PedidoList = new JList<String>();
+        final DefaultListModel<String> productosModel = new DefaultListModel<String>();
         JSpinner cantidadSpinner = new JSpinner();
         
         categoriaCombo.addActionListener(new ActionListener() {
@@ -91,7 +91,7 @@ public class Paneles extends JFrame{
         JPanel categoriaPanel = new JPanel(new BorderLayout());
         JPanel productoPanel = new JPanel(new BorderLayout());
         JPanel cantidadPanel = new JPanel(new BorderLayout());
-
+        
         categoriaPanel.add(new JLabel("Seleccione categoría:"), BorderLayout.WEST);
         categoriaPanel.add(categoriaCombo, BorderLayout.SOUTH);
 
@@ -105,6 +105,8 @@ public class Paneles extends JFrame{
         panel.add(productoPanel, BorderLayout.CENTER);
         panel.add(cantidadPanel, BorderLayout.SOUTH);
         
+        panel.add(new JLabel("Producto"), BorderLayout.WEST);
+        
         
         
         
@@ -116,7 +118,7 @@ public class Paneles extends JFrame{
             Object cantidad = cantidadSpinner.getValue();
        
             String pedido = "Mostrador - Categoría: " + categoria + ", Producto: " + producto + ", Cantidad (Comida): " + cantidad;
-            DefaultListModel pedidosModel = null;
+            DefaultListModel<String> pedidosModel = null;
 			pedidosModel.addElement(pedido);
         }
     }
