@@ -1,139 +1,59 @@
 package Datalive;
 
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Color;
+import java.awt.Font;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.MutableComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
+import javax.swing.JPanel;
 
-public class Pedidomostrador {
-
-	private JFrame frame;
-	private JLabel IblOpcion;
-	private JComboBox cboCategoria;
-	private JComboBox cboProductos;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Pedidomostrador window = new Pedidomostrador();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+public class Pedidomostrador extends JFrame{
+	private static final long serialVersionUID = 1L;
+	public JPanel panel;
+	
+	public Pedidomostrador(){
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("DATALIVE");
+		this.getContentPane().setBackground(Color.GRAY);
+		this.setSize(400, 690);
+		this.setResizable(false);
+		this.setLocationRelativeTo(null);
+		InicioComponentes();
 	}
 
-	public Pedidomostrador() {
-		initialize();
-		imprimirpedido();
+	public void InicioComponentes() {
+		Colocarpaneles();
+		ColocarEtiquetas();
+		Colocarbotones();
 	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void initialize() {
-		frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocation(null);
-		frame.setResizable(false);
-		frame.setTitle("Pedido mostrador");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("Categoria");
-		lblNewLabel.setBounds(31, 29, 55, 14);
-		frame.getContentPane().add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Productos");
-		lblNewLabel_1.setBounds(31, 73, 55, 14);
-		frame.getContentPane().add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("Cantidad");
-		lblNewLabel_2.setBounds(31, 116, 46, 14);
-		frame.getContentPane().add(lblNewLabel_2);
-		
-		cboCategoria = new JComboBox();
-		cboCategoria.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				imprimirpedido();
-			}
-		});
-		cboCategoria.setModel(new DefaultComboBoxModel(new String[] {"Empanadas", "Pizzas", "Bebidas", "Sandwiches", "Panchos"}));
-		cboCategoria.setBounds(96, 25, 98, 22);
-		frame.getContentPane().add(cboCategoria);
-		final JComboBox<?> productosModel = new JComboBox<Object>();
-		
-		cboProductos = new JComboBox();
-		cboProductos.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				imprimirpedido();
-			}
-		});
-		cboProductos.setBounds(96, 69, 98, 22);
-		frame.getContentPane().add(cboProductos);
-		
-		IblOpcion = new JLabel("New label");
-		IblOpcion.setBorder(new LineBorder(new Color(0, 0, 0)));
-		IblOpcion.setBounds(60, 141, 149, 99);
-		frame.getContentPane().add(IblOpcion);
-		
-		cboCategoria.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String categoriaSeleccionada = (String) cboCategoria.getSelectedItem();
-                
-                if (categoriaSeleccionada.equals("Empanadas")) {
-                    ((MutableComboBoxModel) productosModel).addElement("Empanada de Carne");
-                    ((MutableComboBoxModel) productosModel).addElement("Empanada de Pollo");
-                    ((MutableComboBoxModel) productosModel).addElement("Empanada de Jamón y Queso");
-                    ((MutableComboBoxModel) productosModel).addElement("Empanada de Champiñones");
-                    ((MutableComboBoxModel) productosModel).addElement("Empanada de Espinacas");
-                    
-                } else if (categoriaSeleccionada.equals("Bebidas")) {
-                    ((MutableComboBoxModel) productosModel).addElement("Coca Cola");
-                    ((MutableComboBoxModel) productosModel).addElement("Pepsi");
-                    ((MutableComboBoxModel) productosModel).addElement("Paso de los toros");
-                    ((MutableComboBoxModel) productosModel).addElement("Sprite");
-                    ((MutableComboBoxModel) productosModel).addElement("Seven Up");
-                
-                } else if (categoriaSeleccionada.equals("Pizzas")) {
-                	((MutableComboBoxModel) productosModel).addElement("Pizza Margarita");
-                    ((MutableComboBoxModel) productosModel).addElement("Pizza Pepperoni");
-                    ((MutableComboBoxModel) productosModel).addElement("Pizza Hawaiana");
-                    ((MutableComboBoxModel) productosModel).addElement("Pizza Vegetariana");
-                    ((MutableComboBoxModel) productosModel).addElement("Pizza BBQ");
-                    ((MutableComboBoxModel) productosModel).addElement("Pizza Muzzarela");
-                
-                } else if (categoriaSeleccionada.equals("Sandwiches")) {
-                	((MutableComboBoxModel) productosModel).addElement("Sandwiche de milanesa");
-                	((MutableComboBoxModel) productosModel).addElement("Sandwiche de bondiola");
-                	((MutableComboBoxModel) productosModel).addElement("Sandwiche de matambre");
-                	((MutableComboBoxModel) productosModel).addElement("Sandwiche de jamon y queso");
-                	
-                } else if (categoriaSeleccionada.equals("Panchos")) {
-                	((MutableComboBoxModel) productosModel).addElement("Pancho extra grande");
-                	((MutableComboBoxModel) productosModel).addElement("Pancho comun");
-                	((MutableComboBoxModel) productosModel).addElement("Pancho venezolano");
-                }
-                
-            }
-        });
+	
+	public void Colocarpaneles() {
+		panel= new JPanel();
+		panel.setBackground(Color.WHITE);
+		panel.setLayout(null);
+		this.getContentPane().add(panel);
 	}
-
-	protected void imprimirpedido() {
-		String categoria=cboCategoria.getSelectedItem().toString();
-		String producto=cboProductos.getSelectedItem().toString();
-		IblOpcion.setText(categoria + producto);
-		
+	
+	public void ColocarEtiquetas() {
+		JLabel categoria=new JLabel("Categoria: ");
+		categoria.setBounds(100, 40, 200, 50);
+		categoria.setForeground(Color.BLACK);
+		categoria.setFont(new Font("arial",Font.PLAIN, 15));
+		panel.add(categoria);
 	}
-
+	
+	public void Colocarbotones() {
+		JButton Agregarpedido=new JButton("Aceptar");
+		Agregarpedido.setBounds(50, 500, 100, 50);
+		Agregarpedido.setForeground(Color.BLACK);
+		Agregarpedido.setFont(new Font("arial", Font.BOLD, 15));
+		JButton Cancelarpedido=new JButton("Cancelar");
+		Cancelarpedido.setBounds(100, 500, 100, 50);
+		Cancelarpedido.setFont(new Font("arial", Font.BOLD, 15));
+		panel.add(Agregarpedido);
+		panel.add(Cancelarpedido);
+	}
+	
+	
 }
