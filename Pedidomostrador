@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 public class Pedidomostrador extends JFrame{
@@ -55,41 +56,47 @@ public class Pedidomostrador extends JFrame{
 		cantidad.setForeground(Color.BLACK);
 		cantidad.setFont(new Font("arial",Font.PLAIN, 15));
 		JLabel productoelegido=new JLabel("Producto");
-		productoelegido.setBounds(40, 330, 200, 50);
+		productoelegido.setBounds(40, 270, 200, 50);
 		productoelegido.setForeground(Color.BLACK);
 		productoelegido.setFont(new Font("arial",Font.PLAIN, 15));
 		JLabel cantidadelegida=new JLabel("Cantidad");
-		cantidadelegida.setBounds(165, 330, 200, 50);
+		cantidadelegida.setBounds(165, 270, 200, 50);
 		cantidadelegida.setForeground(Color.BLACK);
 		cantidadelegida.setFont(new Font("arial",Font.PLAIN, 15));
 		JLabel precio=new JLabel("Precio");
-		precio.setBounds(290, 330, 200, 50);
+		precio.setBounds(290, 270, 200, 50);
 		precio.setForeground(Color.BLACK);
 		precio.setFont(new Font("arial",Font.PLAIN, 15));
+		JLabel Nombrecliente=new JLabel("Cliente");
+		Nombrecliente.setBounds(40, 170, 200, 50);
+		Nombrecliente.setForeground(Color.BLACK);
+		Nombrecliente.setFont(new Font("arial",Font.PLAIN, 15));
 		panel.add(categoria);
 		panel.add(producto);
 		panel.add(cantidad);
 		panel.add(productoelegido);
 		panel.add(cantidadelegida);
 		panel.add(precio);
-		
+		panel.add(Nombrecliente);
 	}
+	
+	
 	
 	public void Colocarbotones() {
 		JButton Agregarpedido=new JButton("Aceptar");
-		Agregarpedido.setBounds(90, 550, 100, 30);
+		Agregarpedido.setBounds(90, 600, 100, 30);
 		Agregarpedido.setForeground(Color.BLACK);
 		Agregarpedido.setFont(new Font("arial", Font.BOLD, 15));
 		JButton Cancelarpedido=new JButton("Cancelar");
-		Cancelarpedido.setBounds(200, 550, 100, 30);
+		Cancelarpedido.setBounds(200, 600, 100, 30);
 		Cancelarpedido.setFont(new Font("arial", Font.BOLD, 15));
-		JButton Agregar=new JButton("Agregar");
-		Agregar.setBounds(145, 300, 100, 25);
-		Agregar.setForeground(Color.BLACK);
-		Agregar.setFont(new Font("arial", Font.BOLD, 15));
+		JTextField cliente=new JTextField();
+		cliente.setBounds(145, 185, 200, 25);
+		cliente.setForeground(Color.BLACK);
+		cliente.setFont(new Font("arial", Font.BOLD, 15));
+		panel.add(cliente);
 		panel.add(Agregarpedido);
 		panel.add(Cancelarpedido);
-		panel.add(Agregar);
 	
 		ActionListener desplegador=new ActionListener() {
 			@Override
@@ -106,22 +113,41 @@ public class Pedidomostrador extends JFrame{
 				}
 				};
 				Cancelarpedido.addActionListener(desplegador2);
+			
 	}
 	
 	public void ColocarCombos(){
 		String [] categoria={"Empanadas","Pizzas","Bebidas", "Sandwiches", "Panchos"}; 
-		final JComboBox categorias = new JComboBox(categoria);
+		final JComboBox<?> categorias = new JComboBox<Object>(categoria);
 		categorias.setBounds(145, 55, 100, 20);
 		categorias.setSelectedItem(null);
-		final JComboBox productos = new JComboBox();
+		final JComboBox<String> productos = new JComboBox<String>();
 		productos.setBounds(145, 95, 220, 20);
 		productos.setSelectedItem(null);
 		JSpinner cantidadproductos=new JSpinner();
 		cantidadproductos.setBounds(145, 135, 100, 25);
 		cantidadproductos.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		JLabel producto= new JLabel((String) productos.getSelectedItem());
+		producto.setBounds(40, 320, 200, 50);
+		producto.setForeground(Color.BLACK);
+		producto.setFont(new Font("arial",Font.PLAIN, 15));
+		JButton Agregar=new JButton("Agregar");
+		Agregar.setBounds(145, 235, 100, 25);
+		Agregar.setForeground(Color.BLACK);
+		Agregar.setFont(new Font("arial", Font.BOLD, 15));
+		JLabel Pedido=new JLabel("");
+		Pedido.setBounds(40, 315, 200, 20);
+		Pedido.setFont(new Font("arial", Font.BOLD, 12));
+		JLabel Pedido2=new JLabel("");
+		Pedido2.setBounds(40, 340, 200, 20);
+		Pedido2.setFont(new Font("arial", Font.BOLD, 12));
 		panel.add(categorias);
 		panel.add(productos);
 		panel.add(cantidadproductos);
+		panel.add(producto);
+		panel.add(Agregar);
+		panel.add(Pedido);
+		panel.add(Pedido2);
 		
 		categorias.addActionListener(new ActionListener() {
             @Override
@@ -131,19 +157,19 @@ public class Pedidomostrador extends JFrame{
                 
                 if (categoriaSeleccionada.equals("Empanadas")) {
                 	productos.removeAllItems();
-                    productos.addItem("Empanada de Carne");
-                    productos.addItem("Empanada de Pollo");
-                    productos.addItem("Empanada de Jamón y Queso");
-                    productos.addItem("Empanada de Champiñones");
-                    productos.addItem("Empanada de Espinacas");
+                    productos.addItem("Carne");
+                    productos.addItem("Pollo");
+                    productos.addItem("Jamón y Queso");
+                    productos.addItem("Champiñones");
+                    productos.addItem("Espinacas");
                 }	else if (categoriaSeleccionada.equals("Pizzas")) {
                 	productos.removeAllItems();
-                    productos.addItem("Pizza Margarita");
-                    productos.addItem("Pizza Pepperoni");
-                    productos.addItem("Pizza Hawaiana");
-                    productos.addItem("Pizza Vegetariana");
-                    productos.addItem("Pizza BBQ");
-                    productos.addItem("Pizza Muzzarela");
+                    productos.addItem("Margarita");
+                    productos.addItem("Pepperoni");
+                    productos.addItem("Hawaiana");
+                    productos.addItem("Vegetariana");
+                    productos.addItem("BBQ");
+                    productos.addItem("Muzzarela");
                 }   else if (categoriaSeleccionada.equals("Bebidas")) {
                 	productos.removeAllItems();
                     productos.addItem("Coca Cola");
@@ -153,18 +179,29 @@ public class Pedidomostrador extends JFrame{
                     productos.addItem("Seven Up");
                 }   else if (categoriaSeleccionada.equals("Sandwiches")) {
                 	productos.removeAllItems();
-                    productos.addItem("Sandwiche de milanesa de pollo");
-                    productos.addItem("Sandwiche de milanesa de carne");
-                    productos.addItem("Sandwiche de bondiola");
-                    productos.addItem("Sandwiche de matambre");
-                    productos.addItem("Sandwiche de jamon y queso");
+                    productos.addItem("Milanesa de pollo");
+                    productos.addItem("Milanesa de carne");
+                    productos.addItem("Bondiola");
+                    productos.addItem("Matambre");
+                    productos.addItem("Jamon y queso");
             }		else if (categoriaSeleccionada.equals("Panchos")) {
             		productos.removeAllItems();
-                	productos.addItem("Pancho extra grande");
-                	productos.addItem("Pancho comun");
-                	productos.addItem("Pancho venezolano");
+                	productos.addItem("Extra grande");
+                	productos.addItem("Comun");
+                	productos.addItem("Venezolano");
             }
           }
 		});
+		
+		ActionListener desplegador3=new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae){
+				String producto=productos.getSelectedItem().toString();
+				Pedido.setText(producto);
+				String producto2=productos.getSelectedItem().toString();
+				Pedido2.setText(producto2);
+			}
+			};
+			Agregar.addActionListener(desplegador3);	
   }
 }
