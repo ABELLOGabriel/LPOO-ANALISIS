@@ -1,0 +1,311 @@
+package Datalive;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.table.DefaultTableModel;
+
+
+
+public class Pedidodelivery extends JFrame{
+	private static final long serialVersionUID = 1L;
+	public JPanel panel;
+	public JPanel panel2;
+	public JScrollPane scroll;
+	public JTable tabla;
+	public DefaultTableModel modelo;
+	
+	Conexion conexion=new Conexion();
+	Connection cn=conexion.conectar();
+	
+	public Pedidodelivery(){
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Pedido Mostrador");
+		this.getContentPane().setBackground(Color.GRAY);
+		this.setSize(550, 690);
+		this.setResizable(false);
+		this.setLocationRelativeTo(null);
+		InicioComponentes();
+	}
+
+	public void InicioComponentes() {
+		Colocarpaneles();
+		ColocarEtiquetas();
+		Colocarbotones();
+		ColocarCombos();
+		Colocarspinner();
+		Colocartextos();
+	}
+	
+	public void Colocarpaneles() {
+		panel= new JPanel();
+		panel.setBackground(Color.WHITE);
+		panel.setLayout(null);
+		this.getContentPane().add(panel);
+	}
+	
+	public void ColocarEtiquetas() {
+		JLabel categoria=new JLabel("Categoria");
+		categoria.setBounds(40, 40, 200, 50);
+		categoria.setForeground(Color.BLACK);
+		categoria.setFont(new Font("arial",Font.PLAIN, 15));
+		JLabel producto=new JLabel("Productos");
+		producto.setBounds(40, 80, 200, 50);
+		producto.setForeground(Color.BLACK);
+		producto.setFont(new Font("arial",Font.PLAIN, 15));
+		JLabel cantidad=new JLabel("Cantidad");
+		cantidad.setBounds(40, 120, 200, 50);
+		cantidad.setForeground(Color.BLACK);
+		cantidad.setFont(new Font("arial",Font.PLAIN, 15));
+		JLabel Nombrecliente=new JLabel("Cliente");
+		Nombrecliente.setBounds(40, 170, 200, 50);
+		Nombrecliente.setForeground(Color.BLACK);
+		Nombrecliente.setFont(new Font("arial",Font.PLAIN, 15));
+		JLabel dni=new JLabel("DNI");
+		dni.setBounds(40, 202, 200, 50);
+		dni.setForeground(Color.BLACK);
+		dni.setFont(new Font("arial",Font.PLAIN, 15));
+		JLabel telefono=new JLabel("Telefono");
+		telefono.setBounds(40, 230, 200, 50);
+		telefono.setForeground(Color.BLACK);
+		telefono.setFont(new Font("arial",Font.PLAIN, 15));
+		JLabel direccion=new JLabel("Direccion");
+		direccion.setBounds(40, 264, 200, 50);
+		direccion.setForeground(Color.BLACK);
+		direccion.setFont(new Font("arial",Font.PLAIN, 15));
+		panel.add(categoria);
+		panel.add(producto);
+		panel.add(cantidad);
+		panel.add(Nombrecliente);
+		panel.add(dni);
+		panel.add(telefono);
+		panel.add(direccion);
+	}
+	
+	
+	
+	public void Colocarbotones() {
+		JButton Agregarpedido=new JButton("Aceptar");
+		Agregarpedido.setBounds(90, 550, 100, 30);
+		Agregarpedido.setForeground(Color.BLACK);
+		Agregarpedido.setFont(new Font("arial", Font.BOLD, 15));
+		JButton Cancelarpedido=new JButton("Cancelar");
+		Cancelarpedido.setBounds(200, 550, 100, 30);
+		Cancelarpedido.setFont(new Font("arial", Font.BOLD, 15));
+		panel.add(Agregarpedido);
+		panel.add(Cancelarpedido);
+	
+		ActionListener desplegador=new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae){
+				dispose();
+			}
+			};
+			Agregarpedido.addActionListener(desplegador);
+			
+			ActionListener desplegador2=new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent ae){
+					dispose();
+				}
+				};
+				Cancelarpedido.addActionListener(desplegador2);
+			
+	}
+	
+	public void ColocarCombos(){	
+		JButton agregar=new JButton("Agregar");
+		agregar.setBounds(400, 240, 100, 40);
+		agregar.setFont(new Font("arial", Font.BOLD, 15));
+		panel.add(agregar);
+		final JLabel productoelegido=new JLabel("");
+		productoelegido.setBounds(40, 315, 200, 20);
+		productoelegido.setFont(new Font("arial", Font.BOLD, 12));
+		panel.add(productoelegido);
+		final JComboBox c=new JComboBox();
+		final JComboBox p=new JComboBox();
+		p.setBounds(145, 95, 220, 20);
+		c.setBounds(145, 55, 100, 20);
+		c.setSelectedItem(null);
+		p.setSelectedItem(null);
+		panel.add(c);
+		panel.add(p);
+		final DefaultComboBoxModel combo=new DefaultComboBoxModel();
+		final DefaultComboBoxModel combo2=new DefaultComboBoxModel();
+		c.setModel(combo);
+		p.setModel(combo2);
+		final Listadocategoria listado=new Listadocategoria();
+		final Listadoproductos listado2=new Listadoproductos();
+		modelo=new DefaultTableModel();
+		scroll=new JScrollPane();
+		String pedido[]={"Producto", "Cantidad", "Precio"};
+		tabla=new JTable(modelo);
+		modelo.setColumnIdentifiers(pedido);
+		tabla.setBounds(8, 320, 530, 200);
+		scroll.setBounds(8, 320, 530, 200);
+		scroll.setViewportView(tabla);
+		panel.add(scroll);
+		final JSpinner cantidad=new JSpinner();
+		cantidad.setBounds(145, 135, 100, 25);
+		cantidad.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		panel.add(cantidad);
+		
+		try{
+			java.sql.Statement st=cn.createStatement();
+			ResultSet rs=st.executeQuery("Select categoria from categorias");
+			while(rs.next()){
+				Productos productos=new Productos();
+				productos.setcategoria(rs.getString(1));
+				listado.Agregarcategoria(productos);
+				combo.addElement(productos.getcategoria());
+			}
+		} catch(Exception e){
+
+		}
+		c.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String categoriaseleccionada=(String) c.getSelectedItem();
+				
+				if(categoriaseleccionada.equals("Empanadas")){
+					p.removeAllItems();
+					try{
+						java.sql.Statement st=cn.createStatement();
+						ResultSet rs=st.executeQuery("Select descripcion from productos where id_categorias=1");
+						while(rs.next()){
+							Producto producto=new Producto();
+							producto.setDescripcion(rs.getString(1)); 
+							listado2.Agregarproductos(producto);
+							combo2.addElement(producto.getDescripcion());
+						}
+					} catch(Exception r){
+						
+					}
+				}
+				else if(categoriaseleccionada.equals("Pizzas")){
+					p.removeAllItems();
+					try{
+						java.sql.Statement st=cn.createStatement();
+						ResultSet rs=st.executeQuery("Select descripcion from productos where id_categorias=2");
+						while(rs.next()){
+							Producto producto=new Producto();
+							producto.setDescripcion(rs.getString(1)); 
+							listado2.Agregarproductos(producto);
+							combo2.addElement(producto.getDescripcion());
+						}
+					} catch(Exception r){
+						
+					}
+				}
+				else if(categoriaseleccionada.equals("Bebidas")){
+					p.removeAllItems();
+					try{
+						java.sql.Statement st=cn.createStatement();
+						ResultSet rs=st.executeQuery("Select descripcion from productos where id_categorias=3");
+						while(rs.next()){
+							Producto producto=new Producto();
+							producto.setDescripcion(rs.getString(1)); 
+							listado2.Agregarproductos(producto);
+							combo2.addElement(producto.getDescripcion());
+						}
+					} catch(Exception r){
+
+					}
+				}
+				else if(categoriaseleccionada.equals("Sandwiches")){
+					p.removeAllItems();
+					try{
+						java.sql.Statement st=cn.createStatement();
+						ResultSet rs=st.executeQuery("Select descripcion from productos where id_categorias=4");
+						while(rs.next()){
+							Producto producto=new Producto();
+							producto.setDescripcion(rs.getString(1)); 
+							listado2.Agregarproductos(producto);
+							combo2.addElement(producto.getDescripcion());
+						}
+					} catch(Exception r){
+						
+					}
+				}
+				else if(categoriaseleccionada.equals("Panchos")){
+					p.removeAllItems();
+					try{
+						java.sql.Statement st=cn.createStatement();
+						ResultSet rs=st.executeQuery("Select descripcion from productos where id_categorias=5");
+						while(rs.next()){
+							Producto producto=new Producto();
+							producto.setDescripcion(rs.getString(1)); 
+							listado2.Agregarproductos(producto);
+							combo2.addElement(producto.getDescripcion());
+						}
+					} catch(Exception r){
+
+					}
+				}
+			}
+			
+		}
+		);
+		ActionListener desplegador3=new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae){
+				String producto=String.valueOf(p.getSelectedItem());
+				String cantidadproducto=String.valueOf(cantidad.getValue());
+				modelo.addRow(new Object[]{producto, cantidadproducto});
+				p.setSelectedItem("");
+				cantidad.setValue("");
+				
+				
+			}
+			};
+			agregar.addActionListener(desplegador3);	
+			
+		
+	}
+	
+	public void Colocarspinner(){
+		JSpinner cantidad=new JSpinner();
+		cantidad.setBounds(145, 135, 100, 25);
+		cantidad.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		panel.add(cantidad);
+	}
+	
+	public void Colocartextos(){
+		JTextField cliente=new JTextField();
+		cliente.setBounds(145, 185, 200, 25);
+		cliente.setForeground(Color.BLACK);
+		cliente.setFont(new Font("arial", Font.BOLD, 15));
+		JTextField dni=new JTextField();
+		dni.setBounds(145, 215, 200, 25);
+		dni.setForeground(Color.BLACK);
+		dni.setFont(new Font("arial", Font.BOLD, 15));
+		JTextField telefono=new JTextField();
+		telefono.setBounds(145, 245, 200, 25);
+		telefono.setForeground(Color.BLACK);
+		telefono.setFont(new Font("arial", Font.BOLD, 15));
+		JTextField direccion=new JTextField();
+		direccion.setBounds(145, 275, 200, 25);
+		telefono.setForeground(Color.BLACK);
+		direccion.setFont(new Font("arial", Font.BOLD, 15));
+		panel.add(cliente);
+		panel.add(dni);
+		panel.add(telefono);
+		panel.add(direccion);
+	}
+
+}
