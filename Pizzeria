@@ -2,7 +2,9 @@ package Datalive;
 
 public class Pizzeria {
 	public static void main(String[] args) {	
-		 Ventana ventana=new Ventana();
+		@SuppressWarnings("unused")
+		Conexion conexion=new Conexion(); 
+		Ventana ventana=new Ventana();
 		 ventana.setVisible(true);
 	}
 }
