@@ -4,25 +4,38 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.table.DefaultTableModel;
+
+
 
 public class Pedidomostrador extends JFrame{
 	private static final long serialVersionUID = 1L;
 	public JPanel panel;
 	public JPanel panel2;
+	int cont=0;
+	
+	Conexion conexion=new Conexion();
+	Connection cn=conexion.conectar();
 	
 	public Pedidomostrador(){
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Pedido Mostrador");
 		this.getContentPane().setBackground(Color.GRAY);
-		this.setSize(400, 690);
+		this.setSize(550, 690);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		InicioComponentes();
@@ -33,6 +46,7 @@ public class Pedidomostrador extends JFrame{
 		ColocarEtiquetas();
 		Colocarbotones();
 		ColocarCombos();
+		Colocartextos();
 	}
 	
 	public void Colocarpaneles() {
@@ -55,46 +69,36 @@ public class Pedidomostrador extends JFrame{
 		cantidad.setBounds(40, 120, 200, 50);
 		cantidad.setForeground(Color.BLACK);
 		cantidad.setFont(new Font("arial",Font.PLAIN, 15));
-		JLabel productoelegido=new JLabel("Producto");
-		productoelegido.setBounds(40, 270, 200, 50);
-		productoelegido.setForeground(Color.BLACK);
-		productoelegido.setFont(new Font("arial",Font.PLAIN, 15));
-		JLabel cantidadelegida=new JLabel("Cantidad");
-		cantidadelegida.setBounds(165, 270, 200, 50);
-		cantidadelegida.setForeground(Color.BLACK);
-		cantidadelegida.setFont(new Font("arial",Font.PLAIN, 15));
-		JLabel precio=new JLabel("Precio");
-		precio.setBounds(290, 270, 200, 50);
-		precio.setForeground(Color.BLACK);
-		precio.setFont(new Font("arial",Font.PLAIN, 15));
 		JLabel Nombrecliente=new JLabel("Cliente");
 		Nombrecliente.setBounds(40, 170, 200, 50);
 		Nombrecliente.setForeground(Color.BLACK);
 		Nombrecliente.setFont(new Font("arial",Font.PLAIN, 15));
+		JLabel dni=new JLabel("DNI");
+		dni.setBounds(40, 202, 200, 50);
+		dni.setForeground(Color.BLACK);
+		dni.setFont(new Font("arial",Font.PLAIN, 15));
+		JLabel telefono=new JLabel("Telefono");
+		telefono.setBounds(40, 230, 200, 50);
+		telefono.setForeground(Color.BLACK);
+		telefono.setFont(new Font("arial",Font.PLAIN, 15));
 		panel.add(categoria);
 		panel.add(producto);
 		panel.add(cantidad);
-		panel.add(productoelegido);
-		panel.add(cantidadelegida);
-		panel.add(precio);
 		panel.add(Nombrecliente);
+		panel.add(dni);
+		panel.add(telefono);
 	}
 	
 	
 	
 	public void Colocarbotones() {
 		JButton Agregarpedido=new JButton("Aceptar");
-		Agregarpedido.setBounds(90, 600, 100, 30);
+		Agregarpedido.setBounds(90, 550, 100, 30);
 		Agregarpedido.setForeground(Color.BLACK);
 		Agregarpedido.setFont(new Font("arial", Font.BOLD, 15));
 		JButton Cancelarpedido=new JButton("Cancelar");
-		Cancelarpedido.setBounds(200, 600, 100, 30);
+		Cancelarpedido.setBounds(200, 550, 100, 30);
 		Cancelarpedido.setFont(new Font("arial", Font.BOLD, 15));
-		JTextField cliente=new JTextField();
-		cliente.setBounds(145, 185, 200, 25);
-		cliente.setForeground(Color.BLACK);
-		cliente.setFont(new Font("arial", Font.BOLD, 15));
-		panel.add(cliente);
 		panel.add(Agregarpedido);
 		panel.add(Cancelarpedido);
 	
@@ -116,92 +120,168 @@ public class Pedidomostrador extends JFrame{
 			
 	}
 	
-	public void ColocarCombos(){
-		String [] categoria={"Empanadas","Pizzas","Bebidas", "Sandwiches", "Panchos"}; 
-		final JComboBox<?> categorias = new JComboBox<Object>(categoria);
-		categorias.setBounds(145, 55, 100, 20);
-		categorias.setSelectedItem(null);
-		final JComboBox<String> productos = new JComboBox<String>();
-		productos.setBounds(145, 95, 220, 20);
-		productos.setSelectedItem(null);
-		JSpinner cantidadproductos=new JSpinner();
-		cantidadproductos.setBounds(145, 135, 100, 25);
-		cantidadproductos.setModel(new SpinnerNumberModel(0, 0, 100, 1));
-		JLabel producto= new JLabel((String) productos.getSelectedItem());
-		producto.setBounds(40, 320, 200, 50);
-		producto.setForeground(Color.BLACK);
-		producto.setFont(new Font("arial",Font.PLAIN, 15));
-		JButton Agregar=new JButton("Agregar");
-		Agregar.setBounds(145, 235, 100, 25);
-		Agregar.setForeground(Color.BLACK);
-		Agregar.setFont(new Font("arial", Font.BOLD, 15));
-		JLabel Pedido=new JLabel("");
-		Pedido.setBounds(40, 315, 200, 20);
-		Pedido.setFont(new Font("arial", Font.BOLD, 12));
-		JLabel Pedido2=new JLabel("");
-		Pedido2.setBounds(40, 340, 200, 20);
-		Pedido2.setFont(new Font("arial", Font.BOLD, 12));
-		panel.add(categorias);
-		panel.add(productos);
-		panel.add(cantidadproductos);
-		panel.add(producto);
-		panel.add(Agregar);
-		panel.add(Pedido);
-		panel.add(Pedido2);
+	public void ColocarCombos(){	
+		JButton agregar=new JButton("Agregar");
+		agregar.setBounds(190, 280, 100, 20);
+		agregar.setFont(new Font("arial", Font.BOLD, 15));
+		panel.add(agregar);
+		final JComboBox c=new JComboBox();
+		final JComboBox p=new JComboBox();
+		p.setBounds(145, 95, 220, 20);
+		c.setBounds(145, 55, 100, 20);
+		c.setSelectedItem(null);
+		p.setSelectedItem(null);
+		panel.add(c);
+		panel.add(p);
+		final DefaultComboBoxModel combo=new DefaultComboBoxModel();
+		final DefaultComboBoxModel combo2=new DefaultComboBoxModel();
+		c.setModel(combo);
+		p.setModel(combo2);
+		final Listadocategoria listado=new Listadocategoria();
+		final Listadoproductos listado2=new Listadoproductos();
+		final JSpinner cantidad=new JSpinner();
+		cantidad.setBounds(145, 135, 100, 25);
+		cantidad.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		panel.add(cantidad);
+		final DefaultTableModel modelo=new DefaultTableModel();
+		JScrollPane scroll=new JScrollPane();
+		JTable tabla=new JTable(modelo);
+		String pedido[]={"Producto", "Cantidad", "Precio"};
+		modelo.setColumnIdentifiers(pedido);
+		tabla.setBounds(8, 320, 530, 200);
+		scroll.setBounds(8, 320, 530, 200);
+		scroll.setViewportView(tabla);
+		panel.add(scroll);
 		
-		categorias.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String categoriaSeleccionada = (String) categorias.getSelectedItem();
-                
-                
-                if (categoriaSeleccionada.equals("Empanadas")) {
-                	productos.removeAllItems();
-                    productos.addItem("Carne");
-                    productos.addItem("Pollo");
-                    productos.addItem("Jamón y Queso");
-                    productos.addItem("Champiñones");
-                    productos.addItem("Espinacas");
-                }	else if (categoriaSeleccionada.equals("Pizzas")) {
-                	productos.removeAllItems();
-                    productos.addItem("Margarita");
-                    productos.addItem("Pepperoni");
-                    productos.addItem("Hawaiana");
-                    productos.addItem("Vegetariana");
-                    productos.addItem("BBQ");
-                    productos.addItem("Muzzarela");
-                }   else if (categoriaSeleccionada.equals("Bebidas")) {
-                	productos.removeAllItems();
-                    productos.addItem("Coca Cola");
-                    productos.addItem("Pepsi");
-                    productos.addItem("Paso de los toros");
-                    productos.addItem("Sprite");
-                    productos.addItem("Seven Up");
-                }   else if (categoriaSeleccionada.equals("Sandwiches")) {
-                	productos.removeAllItems();
-                    productos.addItem("Milanesa de pollo");
-                    productos.addItem("Milanesa de carne");
-                    productos.addItem("Bondiola");
-                    productos.addItem("Matambre");
-                    productos.addItem("Jamon y queso");
-            }		else if (categoriaSeleccionada.equals("Panchos")) {
-            		productos.removeAllItems();
-                	productos.addItem("Extra grande");
-                	productos.addItem("Comun");
-                	productos.addItem("Venezolano");
-            }
-          }
-		});
-		
+		try{
+			java.sql.Statement st=cn.createStatement();
+			ResultSet rs=st.executeQuery("Select categoria from categorias");
+			while(rs.next()){
+				Productos productos=new Productos();
+				productos.setcategoria(rs.getString(1));
+				listado.Agregarcategoria(productos);
+				combo.addElement(productos.getcategoria());
+			}
+		} catch(Exception e){
+
+		}
+		c.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String categoriaseleccionada=(String) c.getSelectedItem();
+				
+				if(categoriaseleccionada.equals("Empanadas")){
+					p.removeAllItems();
+					try{
+						java.sql.Statement st=cn.createStatement();
+						ResultSet rs=st.executeQuery("Select descripcion from productos where id_categorias=1");
+						while(rs.next()){
+							Producto producto=new Producto();
+							producto.setDescripcion(rs.getString(1)); 
+							listado2.Agregarproductos(producto);
+							combo2.addElement(producto.getDescripcion());
+						}
+					} catch(Exception r){
+
+					}
+				}
+				else if(categoriaseleccionada.equals("Pizzas")){
+					p.removeAllItems();
+					try{
+						java.sql.Statement st=cn.createStatement();
+						ResultSet rs=st.executeQuery("Select descripcion from productos where id_categorias=2");
+						while(rs.next()){
+							Producto producto=new Producto();
+							producto.setDescripcion(rs.getString(1)); 
+							listado2.Agregarproductos(producto);
+							combo2.addElement(producto.getDescripcion());
+						}
+					} catch(Exception r){
+
+					}
+				}
+				else if(categoriaseleccionada.equals("Bebidas")){
+					p.removeAllItems();
+					try{
+						java.sql.Statement st=cn.createStatement();
+						ResultSet rs=st.executeQuery("Select descripcion from productos where id_categorias=3");
+						while(rs.next()){
+							Producto producto=new Producto();
+							producto.setDescripcion(rs.getString(1)); 
+							listado2.Agregarproductos(producto);
+							combo2.addElement(producto.getDescripcion());
+						}
+					} catch(Exception r){
+
+					}
+				}
+				else if(categoriaseleccionada.equals("Sandwiches")){
+					p.removeAllItems();
+					try{
+						java.sql.Statement st=cn.createStatement();
+						ResultSet rs=st.executeQuery("Select descripcion from productos where id_categorias=4");
+						while(rs.next()){
+							Producto producto=new Producto();
+							producto.setDescripcion(rs.getString(1)); 
+							listado2.Agregarproductos(producto);
+							combo2.addElement(producto.getDescripcion());
+						}
+					} catch(Exception r){
+						
+					}
+				}
+				else if(categoriaseleccionada.equals("Panchos")){
+					p.removeAllItems();
+					try{
+						java.sql.Statement st=cn.createStatement();
+						ResultSet rs=st.executeQuery("Select descripcion from productos where id_categorias=5");
+						while(rs.next()){
+							Producto producto=new Producto();
+							producto.setDescripcion(rs.getString(1)); 
+							listado2.Agregarproductos(producto);
+							combo2.addElement(producto.getDescripcion());
+						}
+					} catch(Exception r){
+						
+					}
+				}
+			}
+			
+		}
+		);
 		ActionListener desplegador3=new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae){
-				String producto=productos.getSelectedItem().toString();
-				Pedido.setText(producto);
-				String producto2=productos.getSelectedItem().toString();
-				Pedido2.setText(producto2);
+				String producto=String.valueOf(p.getSelectedItem().toString());
+				String cantidadproducto=String.valueOf(cantidad.getValue());
+				modelo.addRow(new Object[]{producto, cantidadproducto});
+				p.setSelectedItem("");
+				cantidad.setValue("");
+				
 			}
 			};
-			Agregar.addActionListener(desplegador3);	
-  }
+			agregar.addActionListener(desplegador3);	
+			
+		
+	}
+	
+	public void Colocartextos(){
+		JTextField cliente=new JTextField();
+		cliente.setBounds(145, 185, 200, 25);
+		cliente.setForeground(Color.BLACK);
+		cliente.setFont(new Font("arial", Font.BOLD, 15));
+		JTextField dni=new JTextField();
+		dni.setBounds(145, 215, 200, 25);
+		dni.setForeground(Color.BLACK);
+		dni.setFont(new Font("arial", Font.BOLD, 15));
+		JTextField telefono=new JTextField();
+		telefono.setBounds(145, 245, 200, 25);
+		telefono.setForeground(Color.BLACK);
+		telefono.setFont(new Font("arial", Font.BOLD, 15));
+		panel.add(cliente);
+		panel.add(dni);
+		panel.add(telefono);
+	}
+	
+
 }
