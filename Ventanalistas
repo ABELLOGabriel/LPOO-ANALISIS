@@ -38,7 +38,7 @@ public class Ventanalistas extends JFrame{
 		 JButton Pedidomostrador = new JButton("Tomar Pedido Mostrador");
 		 JButton Pedidodelivery = new JButton("Tomar Pedido Delivery");
 		 Pedidomostrador.setBounds(995, 30, 210, 30);
-		 Pedidodelivery.setBounds(1210, 30, 210, 30);
+		 Pedidodelivery.setBounds(500, 500, 210, 30);
 	     Pedidomostrador.setForeground(Color.BLACK);
 	     Pedidodelivery.setForeground(Color.BLACK);
 		 Pedidomostrador.setFont(new Font("arial", Font.BOLD, 15));
@@ -76,6 +76,25 @@ public class Ventanalistas extends JFrame{
 		 			
 		 		};
 		 		Pedidomostrador.addActionListener(desplegador2);
+		 	ActionListener desplegador3=new ActionListener() {
+				@Override
+			 	public void actionPerformed(ActionEvent ae){
+					Pedidodelivery muestreo2=new Pedidodelivery();
+				    muestreo2.setVisible(true);
+			 	}
+			 		
+				};
+			 	Pedidodelivery.addActionListener(desplegador3);
+			 	
+			 ActionListener desplegador4=new ActionListener() {
+				@Override
+		 		public void actionPerformed(ActionEvent ae){
+		 			Listaproductos nuevo=new Listaproductos();
+		 			nuevo.setVisible(true);
+			 	}
+						
+		 		};
+		 		productos.addActionListener(desplegador4);
 	}
 	
 	}
