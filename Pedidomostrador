@@ -125,16 +125,16 @@ public class Pedidomostrador extends JFrame{
 		agregar.setBounds(190, 280, 100, 20);
 		agregar.setFont(new Font("arial", Font.BOLD, 15));
 		panel.add(agregar);
-		final JComboBox c=new JComboBox();
-		final JComboBox p=new JComboBox();
+		final JComboBox<String> c=new JComboBox<String>();
+		final JComboBox<String> p=new JComboBox<String>();
 		p.setBounds(145, 95, 220, 20);
 		c.setBounds(145, 55, 100, 20);
 		c.setSelectedItem(null);
 		p.setSelectedItem(null);
 		panel.add(c);
 		panel.add(p);
-		final DefaultComboBoxModel combo=new DefaultComboBoxModel();
-		final DefaultComboBoxModel combo2=new DefaultComboBoxModel();
+		final DefaultComboBoxModel<String> combo=new DefaultComboBoxModel<String>();
+		final DefaultComboBoxModel<String> combo2=new DefaultComboBoxModel<String>();
 		c.setModel(combo);
 		p.setModel(combo2);
 		final Listadocategoria listado=new Listadocategoria();
@@ -152,6 +152,7 @@ public class Pedidomostrador extends JFrame{
 		scroll.setBounds(8, 320, 530, 200);
 		scroll.setViewportView(tabla);
 		panel.add(scroll);
+		
 		
 		try{
 			java.sql.Statement st=cn.createStatement();
@@ -215,40 +216,11 @@ public class Pedidomostrador extends JFrame{
 
 					}
 				}
-				else if(categoriaseleccionada.equals("Sandwiches")){
-					p.removeAllItems();
-					try{
-						java.sql.Statement st=cn.createStatement();
-						ResultSet rs=st.executeQuery("Select descripcion from productos where id_categorias=4");
-						while(rs.next()){
-							Producto producto=new Producto();
-							producto.setDescripcion(rs.getString(1)); 
-							listado2.Agregarproductos(producto);
-							combo2.addElement(producto.getDescripcion());
-						}
-					} catch(Exception r){
-						
-					}
-				}
-				else if(categoriaseleccionada.equals("Panchos")){
-					p.removeAllItems();
-					try{
-						java.sql.Statement st=cn.createStatement();
-						ResultSet rs=st.executeQuery("Select descripcion from productos where id_categorias=5");
-						while(rs.next()){
-							Producto producto=new Producto();
-							producto.setDescripcion(rs.getString(1)); 
-							listado2.Agregarproductos(producto);
-							combo2.addElement(producto.getDescripcion());
-						}
-					} catch(Exception r){
-						
-					}
-				}
 			}
 			
 		}
 		);
+		String productoseleccionado=(String) p.getSelectedItem();
 		ActionListener desplegador3=new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae){
@@ -258,6 +230,19 @@ public class Pedidomostrador extends JFrame{
 				p.setSelectedItem("");
 				cantidad.setValue("");
 				
+				if(productoseleccionado.equals("Empanada de Carne")) {
+					try{
+						java.sql.Statement st=cn.createStatement();
+						ResultSet rs=st.executeQuery("Select PRECIO from productos where Descripcion=Empanada de carne");
+						while(rs.next()){
+							
+							int precio = rs.getInt("precio");
+							modelo.addRow(new Object[]{precio});
+						}
+					} catch(Exception r){
+
+					}
+				}
 			}
 			};
 			agregar.addActionListener(desplegador3);	
