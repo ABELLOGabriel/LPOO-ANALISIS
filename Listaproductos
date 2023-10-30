@@ -1,0 +1,32 @@
+package Datalive;
+
+import java.awt.Color;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class Listaproductos extends JFrame{
+	private static final long serialVersionUID = 1L;
+	public JPanel panel;
+	
+	@SuppressWarnings("static-access")
+	public Listaproductos(){
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Operaciones");
+		this.getContentPane().setBackground(Color.WHITE);
+		this.setExtendedState(this.MAXIMIZED_BOTH);
+		InicioComponentes();
+	}
+	
+	public void InicioComponentes(){
+		ColocarPaneles();
+	}
+	
+	public void ColocarPaneles(){
+		JPanel panel= new JPanel();
+		panel.setBackground(Color.WHITE);
+		panel.setLayout(null);
+		this.getContentPane().add(panel);
+	}
+	
+}
