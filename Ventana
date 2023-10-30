@@ -57,7 +57,7 @@ public class Ventana extends JFrame{
 	
 	public void ColocarBotones(){
 		JButton inicio=new JButton("Iniciar");
-		inicio.setBounds(650, 580, 150, 80);
+		inicio.setBounds(300, 300, 150, 80);
 		inicio.setForeground(Color.BLACK);
 		inicio.setFont(new Font("arial", Font.BOLD, 25));
 		JButton cierre=new JButton("Cerrar");
