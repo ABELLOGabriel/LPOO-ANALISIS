@@ -1,0 +1,14 @@
+package Datalive;
+
+import java.util.ArrayList;
+
+public class Listadoproductos {
+	ArrayList<Producto>lista;
+	
+	public Listadoproductos(){
+		lista=new ArrayList();
+	}
+	public void Agregarproductos(Producto p){
+		lista.add(p);
+	}
+}
