@@ -1,0 +1,31 @@
+package Datalive;
+
+public class Producto {
+	private int id_productos;
+	private String descripcion;
+	
+	public Producto(){
+		
+	}
+
+	public Producto(int id_productos, String descripcion){
+		this.id_productos=id_productos;
+		this.setDescripcion(descripcion);
+	}
+	
+	public void setId_productos(int id_productos) {
+		this.id_productos = id_productos;
+	}
+
+	public int getId_productos() {
+		return id_productos;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+}
