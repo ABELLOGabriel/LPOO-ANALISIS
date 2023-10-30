@@ -30,8 +30,6 @@ CREATE TABLE categorias(
 insert into categorias(categoria) values('Empanadas');
 insert into categorias(categoria) values('Pizzas');
 insert into categorias(categoria) values('Bebidas');
-insert into categorias(categoria) values('Sandwiches');
-insert into categorias(categoria) values('Panchos');
 
 CREATE TABLE PRODUCTOS(
     ID_PRODUCTO int auto_increment unique not null,
@@ -60,14 +58,6 @@ INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (3, 'Pepsi', 9
 INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (3, 'Paso de los toros', 90);
 INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (3, 'Sprite', 90);
 INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (3, 'Seven Up', 90); 
-INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (4, 'Milanesa de pollo', 280);
-INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (4, 'Milanesa de carne', 90);
-INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (4, 'Sandwich de Bondiola', 90);
-INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (4, 'Sandwich de Matambre', 90);
-INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (4, 'Sandwich de Jamon y queso', 90);
-INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (5, 'Pancho Extra grande', 300);
-INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (5, 'Pancho Comun', 100);
-INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (5, 'Pancho Venezolano', 90);
 
 
 CREATE TABLE STOCK(
@@ -96,7 +86,7 @@ INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('202
 INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-25', 200, 14);
 INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-25', 200, 15);
 INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-31', 110, 16);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-31', 120, 17);
+
 
 
 CREATE TABLE PEDIDOS(
