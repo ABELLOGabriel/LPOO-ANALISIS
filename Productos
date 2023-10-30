@@ -1,0 +1,29 @@
+package Datalive;
+
+
+public class Productos{
+	private int id_producto;
+	private String categoria;
+	
+	public Productos() {
+		
+	}
+	
+	public Productos(int id_producto, String categoria){
+		this.id_producto=id_producto;
+		this.categoria=categoria;
+	}
+
+	public int getid_producto(){
+		return id_producto;
+	}
+	public void setid_producto(int id_producto){
+		this.id_producto=id_producto;
+	}
+	public String getcategoria(){
+		return categoria;
+	}
+	public void setcategoria(String categoria){
+		this.categoria=categoria;
+	}
+}
