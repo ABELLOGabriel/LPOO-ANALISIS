@@ -2,81 +2,101 @@ DROP DATABASE DATALIVE;
 CREATE DATABASE DATALIVE;
 USE DATALIVE;
 
-CREATE TABLE CLIENTES(
-    ID_CLIENTE int auto_increment unique not null,
-    Nom_ape varchar(50) not null,
-    telefono INT not null,
-    DNI INT not null,
-    
-	PRIMARY KEY(ID_CLIENTE)
-);
-
 CREATE TABLE METODO_PAGO(
     COD_PAGO int auto_increment unique not null,
     FORMA_PAGO VARCHAR(20) not null,
-    id_cliente int unique not null,
     
-	PRIMARY KEY(COD_PAGO),
-	FOREIGN KEY(id_cliente) references clientes(id_cliente)
+	PRIMARY KEY(COD_PAGO)
 );
 
+CREATE TABLE CLIENTES(
+    ID_CLIENTE int auto_increment unique not null,
+    Nom_ape varchar(50) not null,
+	Cod_pago int unique not null,
+    telefono INT not null,
+    DNI INT not null,
+    
+	PRIMARY KEY(ID_CLIENTE),
+	foreign key(Cod_pago) references METODO_PAGO(COD_PAGO)
+);
 
+CREATE TABLE categorias(
+	id_categoria int auto_increment unique not null,
+	categoria varchar(40) not null,
+
+	primary key(id_categoria)
+);
+
+insert into categorias(categoria) values('Empanadas');
+insert into categorias(categoria) values('Pizzas');
+insert into categorias(categoria) values('Bebidas');
+insert into categorias(categoria) values('Sandwiches');
+insert into categorias(categoria) values('Panchos');
 
 CREATE TABLE PRODUCTOS(
     ID_PRODUCTO int auto_increment unique not null,
-    Descripcion VARCHAR(60) not null,
+    id_categorias int not null,
+	Descripcion VARCHAR(60) not null,
     PRECIO INT not null,
     
-	PRIMARY KEY(ID_PRODUCTO)
+	PRIMARY KEY(ID_PRODUCTO),
+	foreign key(id_categorias) references categorias(id_categoria)
 );
 
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Pizza Margarita', 200);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Pizza Pepperoni', 250);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Pizza Hawaiana', 100);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Pizza Vegetariana', 100);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Pizza BBQ', 200);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Sandiwch de milanesa', 280);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Pancho extra grande', 300);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Pancho comun', 100);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Pizza Muzzarela', 300);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Coca Cola', 90);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Empanada de Carne', 150);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Empanada de Pollo', 150);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Empanada de Jamón y Queso', 180);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Empanada de Champiñones', 130);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Empanada de Espinacas', 140);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Pepsi', 90);
-INSERT INTO PRODUCTOS (Descripcion, PRECIO) VALUES ('Paso de los toros', 90);
 
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (1, 'Empanada de Carne', 150);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (1, 'Empanada de Pollo', 150);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (1, 'Empanada de Jamón y Queso', 180);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (1, 'Empanda de Champiñones', 130);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (1, 'Empanada de Espinacas', 140);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (2, 'Pizza Margarita', 200);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (2, 'Pizza Pepperoni', 250);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (2, 'Pizza Hawaiana', 100);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (2, 'Pizza Vegetariana', 100);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (2, 'Pizza BBQ', 200);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (2, 'Pizza Muzzarela', 300);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (3, 'Coca Cola', 90);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (3, 'Pepsi', 90);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (3, 'Paso de los toros', 90);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (3, 'Sprite', 90);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (3, 'Seven Up', 90); 
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (4, 'Milanesa de pollo', 280);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (4, 'Milanesa de carne', 90);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (4, 'Sandwich de Bondiola', 90);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (4, 'Sandwich de Matambre', 90);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (4, 'Sandwich de Jamon y queso', 90);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (5, 'Pancho Extra grande', 300);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (5, 'Pancho Comun', 100);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (5, 'Pancho Venezolano', 90);
 
 
 CREATE TABLE STOCK(
 	id_stock int auto_increment unique not null,
     FECHA_VENCIMIENTO DATE not null,
     CANTIDAD_STOCK INT not null,
-    ID_PRODUCTO int unique not null,
+    ID_PRODUCTOS int unique not null,
     
 	primary key(id_stock),
-    foreign key(id_producto) REFERENCES productos(id_producto)
+    foreign key(ID_PRODUCTOS) REFERENCES productos(id_producto)
 );
 
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-11-30', 30, 1);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-12-15', 30, 2);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-12-10', 30, 3);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-12-20', 30, 4);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-12-05', 30, 5);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-12-25', 40, 6);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-12-15', 20, 7);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-11-30', 30, 8);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-12-10', 50, 9);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-12-20', 130, 10);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-12-25', 200, 11);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-12-25', 200, 12);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-12-25', 200, 13);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-12-25', 200, 14);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-12-25', 200, 15);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-12-31', 110, 16);
-INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, ID_PRODUCTO) VALUES ('2023-12-31', 120, 17);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-11-30', 30, 1);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-15', 30, 2);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-10', 30, 3);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-20', 30, 4);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-05', 30, 5);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-25', 40, 6);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-15', 20, 7);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-11-30', 30, 8);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-10', 50, 9);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-20', 130, 10);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-25', 200, 11);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-25', 200, 12);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-25', 200, 13);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-25', 200, 14);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-25', 200, 15);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-31', 110, 16);
+INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-31', 120, 17);
 
 
 CREATE TABLE PEDIDOS(
