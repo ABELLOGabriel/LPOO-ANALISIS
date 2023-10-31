@@ -3,14 +3,16 @@ package Datalive;
 public class Producto {
 	private int id_productos;
 	private String descripcion;
+	private int precio;
 	
 	public Producto(){
 		
 	}
 
-	public Producto(int id_productos, String descripcion){
+	public Producto(int id_productos, String descripcion, int precio){
 		this.id_productos=id_productos;
 		this.setDescripcion(descripcion);
+		this.precio=precio;
 	}
 	
 	public void setId_productos(int id_productos) {
@@ -27,5 +29,13 @@ public class Producto {
 
 	public String getDescripcion() {
 		return descripcion;
+	}
+
+	public int getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(int precio) {
+		this.precio = precio;
 	}
 }
