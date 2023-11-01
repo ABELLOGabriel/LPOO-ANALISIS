@@ -137,16 +137,16 @@ public class Pedidodelivery extends JFrame{
 		productoelegido.setBounds(40, 315, 200, 20);
 		productoelegido.setFont(new Font("arial", Font.BOLD, 12));
 		panel.add(productoelegido);
-		final JComboBox c=new JComboBox();
-		final JComboBox p=new JComboBox();
+		final JComboBox<String> c=new JComboBox<String>();
+		final JComboBox<String> p=new JComboBox<String>();
 		p.setBounds(145, 95, 220, 20);
 		c.setBounds(145, 55, 100, 20);
 		c.setSelectedItem(null);
 		p.setSelectedItem(null);
 		panel.add(c);
 		panel.add(p);
-		final DefaultComboBoxModel combo=new DefaultComboBoxModel();
-		final DefaultComboBoxModel combo2=new DefaultComboBoxModel();
+		final DefaultComboBoxModel<String> combo=new DefaultComboBoxModel<String>();
+		final DefaultComboBoxModel<String> combo2=new DefaultComboBoxModel<String>();
 		c.setModel(combo);
 		p.setModel(combo2);
 		final Listadocategoria listado=new Listadocategoria();
@@ -261,19 +261,48 @@ public class Pedidodelivery extends JFrame{
 			
 		}
 		);
-		ActionListener desplegador3=new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent ae){
-				String producto=String.valueOf(p.getSelectedItem());
-				String cantidadproducto=String.valueOf(cantidad.getValue());
-				modelo.addRow(new Object[]{producto, cantidadproducto});
-				p.setSelectedItem("");
-				cantidad.setValue("");
-				
-				
-			}
-			};
-			agregar.addActionListener(desplegador3);	
+		ActionListener desplegador3 = new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent ae) {
+		        String producto = String.valueOf(p.getSelectedItem().toString());
+		        Integer cantidadproducto = Integer.parseInt((String) cantidad.getValue().toString());
+		        try {
+		            java.sql.Statement st = cn.createStatement();
+		            ResultSet rs = st.executeQuery("SELECT precio FROM productos WHERE descripcion = '" + producto + "'");
+		            if (rs.next()) {
+		                int precio = rs.getInt(1);
+		                int monto = cantidadproducto * precio;
+
+		                // Buscar el producto en la tabla
+		                boolean productoEncontrado = false;
+		                for (int i = 0; i < modelo.getRowCount(); i++) {
+		                    if (producto.equals(modelo.getValueAt(i, 0).toString())) {
+		                        // Producto encontrado, sumar cantidad y precio
+		                        int cantidadActual = Integer.parseInt(modelo.getValueAt(i, 1).toString());
+		                        int montoActual = Integer.parseInt(modelo.getValueAt(i, 2).toString());
+		                        cantidadActual += cantidadproducto;
+		                        montoActual += monto;
+		                        modelo.setValueAt(cantidadActual, i, 1);
+		                        modelo.setValueAt(montoActual, i, 2);
+		                        productoEncontrado = true;
+		                        break;
+		                    }
+		                }
+
+		                if (!productoEncontrado) {
+		                    // Producto no encontrado en la tabla, agregar una nueva fila
+		                    modelo.addRow(new Object[]{producto, cantidadproducto, monto});
+		                }
+		            }
+		        } catch (Exception r) {
+		            r.printStackTrace();
+		        }
+
+		        p.setSelectedItem("");
+		        cantidad.setValue(0);
+		    }
+		};
+		agregar.addActionListener(desplegador3);
 			
 		
 	}
