@@ -1,0 +1,116 @@
+package Datalive;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+public class Listastock extends JFrame{
+	private static final long serialVersionUID = 1L;
+	public JPanel panel;
+	
+	public Listastock(){
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("Stock");
+		this.setExtendedState(Frame.MAXIMIZED_BOTH);
+		InicioComponentes();
+	}
+	
+	public void InicioComponentes(){
+		Colocarpaneles();
+		Colocarlabels();
+		Colocarbotones();
+		Tabla();
+	}
+
+	public void Colocarpaneles(){
+		panel= new JPanel();
+		panel.setBackground(Color.GRAY);
+		panel.setLayout(null);
+		this.getContentPane().add(panel);
+	}
+	
+	public void Colocarlabels(){
+		JLabel stock=new JLabel("Stock:");
+		stock.setBounds(45, 15, 300, 50);
+		stock.setForeground(Color.BLACK);
+		stock.setFont(new Font("arial",Font.PLAIN, 41));
+		panel.add(stock);
+	}
+	
+	public void Colocarbotones(){
+		JButton stock=new JButton("Actualizar stock");
+		stock.setBounds(770, 15, 240, 40);
+		stock.setForeground(Color.BLACK);
+		stock.setFont(new Font("arial", Font.BOLD, 20));
+		JButton regresar=new JButton("Regresar");
+		regresar.setBounds(40, 530, 150, 40);
+		regresar.setForeground(Color.BLACK);
+		regresar.setFont(new Font("arial", Font.BOLD, 20));
+		panel.add(stock);
+		panel.add(regresar);
+		
+		ActionListener desplegador=new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae){
+				dispose();
+			}
+		};
+		regresar.addActionListener(desplegador);
+		
+		ActionListener desplegador2=new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae){
+				Actualizarstock actualizar=new Actualizarstock();
+				 actualizar.setVisible(true);
+			}
+		};
+		stock.addActionListener(desplegador2);
+	}
+	
+	public void Tabla(){
+		final DefaultTableModel modelo=new DefaultTableModel();
+		JScrollPane scroll=new JScrollPane();
+		JTable tabla=new JTable(modelo);
+		String Productos[]={"Id stock", "Fecha de vencimiento", "Cantidad de stock", "Id productos"};
+		modelo.setColumnIdentifiers(Productos);
+		tabla.setBounds(12, 75, 1000, 450);
+		scroll.setBounds(12, 75, 1000, 450);
+		scroll.setViewportView(tabla);
+		panel.add(scroll);
+
+		String sql="select * from Stock";
+		Statement st;
+		Conexion con=new Conexion();
+		Connection Conexion=con.conectar();
+		
+		String [] datos=new String[4];
+		try{
+			st=Conexion.createStatement();
+			ResultSet rs=st.executeQuery(sql);
+			while(rs.next()){
+				datos[0]=rs.getString(1);
+				datos[1]=rs.getString(2);
+				datos[2]=rs.getString(3);
+				datos[3]=rs.getString(4);
+				modelo.addRow(datos);
+			}
+		} catch(SQLException e){
+			
+		}
+	}
+	
+}
