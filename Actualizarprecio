@@ -1,0 +1,61 @@
+package Datalive;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class Actualizarprecio extends JDialog {
+	private static final long serialVersionUID = 1L;
+	private JTextField idProductoField;
+    private JTextField nuevoPrecioField;
+
+    public Actualizarprecio(JFrame parent) {
+        super(parent, "Actualizar Precio", true);
+        setSize(300, 150);
+        this.setResizable(false);
+		this.setLocationRelativeTo(null);
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+        idProductoField = new JTextField(10);
+        nuevoPrecioField = new JTextField(10);
+
+        JButton actualizarButton = new JButton("Actualizar Precio");
+        actualizarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarPrecio();
+            }
+        });
+
+        add(new JLabel("ID del Producto:"));
+        add(idProductoField);
+        add(new JLabel("Nuevo Precio:"));
+        add(nuevoPrecioField);
+        add(actualizarButton);
+    }
+
+    private void actualizarPrecio() {
+        try {
+            int idProducto = Integer.parseInt(idProductoField.getText());
+            int nuevoPrecio = Integer.parseInt(nuevoPrecioField.getText());
+
+            // Realizar la actualización en la base de datos
+            Conexion con = new Conexion();
+            Connection conexion = con.conectar();
+            String sql = "UPDATE PRODUCTOS SET PRECIO = ? WHERE ID_PRODUCTO = ?";
+            PreparedStatement stmt = conexion.prepareStatement(sql);
+            stmt.setInt(1, nuevoPrecio);
+            stmt.setInt(2, idProducto);
+            stmt.executeUpdate();
+            stmt.close();
+
+            JOptionPane.showMessageDialog(this, "Precio actualizado correctamente.");
+            dispose(); // Cierra la ventana emergente
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar el precio.");
+        }
+    }
+}
