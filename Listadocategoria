@@ -6,9 +6,10 @@ public class Listadocategoria {
 	ArrayList<Productos>lista;
 	
 	public Listadocategoria(){
-		lista=new ArrayList();
+		lista=new ArrayList<Productos>();
 	}
 	public void Agregarcategoria(Productos c){
 		lista.add(c);
 	}
 }
+
