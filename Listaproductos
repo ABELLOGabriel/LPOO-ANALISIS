@@ -38,26 +38,26 @@ public class Listaproductos extends JFrame{
 	
 	public void ColocarPaneles(){
 		panel= new JPanel();
-		panel.setBackground(Color.GRAY);
+		panel.setBackground(Color.BLACK);
 		panel.setLayout(null);
 		this.getContentPane().add(panel);
 	}
 	
 	public void Colocarlabel(){
 		JLabel producto=new JLabel("Productos:");
-		producto.setBounds(45, 15, 300, 50);
-		producto.setForeground(Color.BLACK);
+		producto.setBounds(50, 50, 300, 50);
+		producto.setForeground(Color.WHITE);
 		producto.setFont(new Font("arial",Font.PLAIN, 41));
 		panel.add(producto);
 	}
 	
 	public void Colocarboton(){
 		JButton precio=new JButton("Actualizar precio");
-		precio.setBounds(770, 15, 240, 40);
+		precio.setBounds(1340, 150, 240, 40);
 		precio.setForeground(Color.BLACK);
 		precio.setFont(new Font("arial", Font.BOLD, 20));
 		JButton regresar=new JButton("Regresar");
-		regresar.setBounds(40, 530, 150, 40);
+		regresar.setBounds(40, 750, 150, 60);
 		regresar.setForeground(Color.BLACK);
 		regresar.setFont(new Font("arial", Font.BOLD, 20));
 		panel.add(precio);
@@ -88,8 +88,8 @@ public class Listaproductos extends JFrame{
 		JTable tabla=new JTable(modelo);
 		String Productos[]={"Id Producto", "Id Categorias", "Descripcion", "Precio"};
 		modelo.setColumnIdentifiers(Productos);
-		tabla.setBounds(12, 75, 1000, 450);
-		scroll.setBounds(12, 75, 1000, 450);
+		tabla.setBounds(295, 150, 1000, 450);
+		scroll.setBounds(295, 150, 1000, 450);
 		scroll.setViewportView(tabla);
 		panel.add(scroll);
 		
