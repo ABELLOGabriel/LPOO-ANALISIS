@@ -34,34 +34,35 @@ public class Ventana extends JFrame{
 	
 	public void ColocarPaneles(){
 		panel= new JPanel();
-		panel.setBackground(Color.GRAY);
+		panel.setBackground(Color.BLACK);
 		panel.setLayout(null);
 		this.getContentPane().add(panel);
 	}
 	
 	public void ColocarEtiquetas(){
 		
-		JLabel titulo=new JLabel("Moly´s Pizzeria");
-		titulo.setBounds(590, 40, 300, 50);
-		titulo.setForeground(Color.BLACK);
+		JLabel titulo=new JLabel("Molly´s Pizzeria");
+		titulo.setBounds(600, 40, 300, 50);
+		titulo.setForeground(Color.WHITE);
 		titulo.setFont(new Font("arial",Font.PLAIN, 41));
 		panel.add(titulo);
 		
 		ImageIcon logo=new ImageIcon("logo.jpg");
 		JLabel imagen=new JLabel();
-		imagen.setBounds(525, 150, 500, 400);
-		imagen.setIcon(new ImageIcon(logo.getImage().getScaledInstance(400, 400, Image.SCALE_SMOOTH)));
+		imagen.setBounds(450, 100, 600, 550);
+		imagen.setIcon(new ImageIcon(logo.getImage().getScaledInstance(200, 100, Image.SCALE_SMOOTH)));
+		imagen.setIcon(new ImageIcon("C:\\Users\\Alumno\\workspace-dos\\DATALIVE\\src\\Datalive\\logo.jpg"));
 		panel.add(imagen);
 	}
 	
 	
 	public void ColocarBotones(){
 		JButton inicio=new JButton("Iniciar");
-		inicio.setBounds(300, 300, 150, 80);
+		inicio.setBounds(650, 655, 200, 80);
 		inicio.setForeground(Color.BLACK);
 		inicio.setFont(new Font("arial", Font.BOLD, 25));
 		JButton cierre=new JButton("Cerrar");
-		cierre.setBounds(650, 700, 150, 80);
+		cierre.setBounds(650, 745, 200, 80);
 		cierre.setForeground(Color.BLACK);
 		cierre.setFont(new Font("arial", Font.BOLD, 25));
 		panel.add(inicio);
