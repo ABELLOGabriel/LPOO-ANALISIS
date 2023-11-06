@@ -9,10 +9,14 @@ CREATE TABLE METODO_PAGO(
 	PRIMARY KEY(COD_PAGO)
 );
 
+insert into metodo_pago(forma_pago) values('Efectivo');
+insert into metodo_pago(forma_pago) values('Mercado Pago');
+
 CREATE TABLE CLIENTES(
     ID_CLIENTE int auto_increment unique not null,
     Nom_ape varchar(50) not null,
-	Cod_pago int unique not null,
+	direccion varchar(100) null,
+	Cod_pago int not null,
     telefono INT not null,
     DNI INT not null,
     
@@ -30,6 +34,7 @@ CREATE TABLE categorias(
 insert into categorias(categoria) values('Empanadas');
 insert into categorias(categoria) values('Pizzas');
 insert into categorias(categoria) values('Bebidas');
+
 
 CREATE TABLE PRODUCTOS(
     ID_PRODUCTO int auto_increment unique not null,
@@ -60,6 +65,7 @@ INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (3, 'Sprite', 
 INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (3, 'Seven Up', 90); 
 
 
+
 CREATE TABLE STOCK(
 	id_stock int auto_increment unique not null,
     FECHA_VENCIMIENTO DATE not null,
@@ -88,16 +94,18 @@ INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('202
 INSERT INTO STOCK (FECHA_VENCIMIENTO, CANTIDAD_STOCK, id_productos) VALUES ('2023-12-31', 110, 16);
 
 
-
 CREATE TABLE PEDIDOS(
     COD_PEDIDOS int auto_increment unique not null,
+	tipo_pedido varchar(50) not null,
     producto varchar(50) not null,
     cantidad int not null,
-    ID_STOCK int unique not null,
-    ID_CLIENTE int unique not null,
+    ID_STOCK int not null,
+    ID_CLIENTE int not null,
     TOTAL int not null,
     
 	PRIMARY KEY (COD_PEDIDOS),
 	foreign key(id_stock) references stock(id_stock),
 	foreign key(id_cliente) references clientes(id_cliente)
 );
+
+
