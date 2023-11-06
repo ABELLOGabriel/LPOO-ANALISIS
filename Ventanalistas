@@ -167,8 +167,9 @@ public class Ventanalistas extends JFrame{
 		 			if (Ventanacierredecaja.bool == true) {
 		 	            totalSum = 0;
 		 	        }
-		 			else if (Ventanacierredecaja.bool == true) {
+		 			else if (Ventanacierredecaja.bool2 == true) {
 		 	            totalsemana = 0;
+		 	            totalSum=0;
 		 	        }
 		 			Ventanacierredecaja cierredecaja=new Ventanacierredecaja(totalSum, totalsemana);
 		 			cierredecaja.setVisible(true);
@@ -267,4 +268,3 @@ public class Ventanalistas extends JFrame{
 	
 	
 	}
-
