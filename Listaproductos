@@ -1,9 +1,21 @@
-package Datalive;
+package Datalive; 
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class Listaproductos extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -12,21 +24,96 @@ public class Listaproductos extends JFrame{
 	@SuppressWarnings("static-access")
 	public Listaproductos(){
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setTitle("Operaciones");
-		this.getContentPane().setBackground(Color.WHITE);
+		setTitle("Productos");
 		this.setExtendedState(this.MAXIMIZED_BOTH);
 		InicioComponentes();
 	}
 	
 	public void InicioComponentes(){
 		ColocarPaneles();
+		Colocarlabel();
+		Colocarboton();
+		Tabla();
 	}
 	
 	public void ColocarPaneles(){
-		JPanel panel= new JPanel();
-		panel.setBackground(Color.WHITE);
+		panel= new JPanel();
+		panel.setBackground(Color.GRAY);
 		panel.setLayout(null);
 		this.getContentPane().add(panel);
 	}
 	
+	public void Colocarlabel(){
+		JLabel producto=new JLabel("Productos:");
+		producto.setBounds(45, 15, 300, 50);
+		producto.setForeground(Color.BLACK);
+		producto.setFont(new Font("arial",Font.PLAIN, 41));
+		panel.add(producto);
+	}
+	
+	public void Colocarboton(){
+		JButton precio=new JButton("Actualizar precio");
+		precio.setBounds(770, 15, 240, 40);
+		precio.setForeground(Color.BLACK);
+		precio.setFont(new Font("arial", Font.BOLD, 20));
+		JButton regresar=new JButton("Regresar");
+		regresar.setBounds(40, 530, 150, 40);
+		regresar.setForeground(Color.BLACK);
+		regresar.setFont(new Font("arial", Font.BOLD, 20));
+		panel.add(precio);
+		panel.add(regresar);
+		
+		ActionListener desplegador=new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae){
+				dispose();
+			}
+		};
+		regresar.addActionListener(desplegador);
+		
+		ActionListener desplegador2=new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae){
+				 Actualizarprecio ventana = new Actualizarprecio(Listaproductos.this);
+			     ventana.setVisible(true);
+			}
+		};
+		precio.addActionListener(desplegador2);
+		
+		}
+	
+	public void Tabla(){
+		final DefaultTableModel modelo=new DefaultTableModel();
+		JScrollPane scroll=new JScrollPane();
+		JTable tabla=new JTable(modelo);
+		String Productos[]={"Id Producto", "Id Categorias", "Descripcion", "Precio"};
+		modelo.setColumnIdentifiers(Productos);
+		tabla.setBounds(12, 75, 1000, 450);
+		scroll.setBounds(12, 75, 1000, 450);
+		scroll.setViewportView(tabla);
+		panel.add(scroll);
+		
+		String sql="select * from productos";
+		Statement st;
+		Conexion con=new Conexion();
+		Connection Conexion=con.conectar();
+		
+		String [] datos=new String[4];
+		try{
+			st=Conexion.createStatement();
+			ResultSet rs=st.executeQuery(sql);
+			while(rs.next()){
+				datos[0]=rs.getString(1);
+				datos[1]=rs.getString(2);
+				datos[2]=rs.getString(3);
+				datos[3]=rs.getString(4);
+				modelo.addRow(datos);
+			}
+		} catch(SQLException e){
+			
+		}
+	}
+	
 }
+	
+	
