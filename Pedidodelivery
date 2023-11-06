@@ -5,13 +5,16 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -26,18 +29,16 @@ public class Pedidodelivery extends JFrame{
 	private static final long serialVersionUID = 1L;
 	public JPanel panel;
 	public JPanel panel2;
-	public JScrollPane scroll;
-	public JTable tabla;
-	public DefaultTableModel modelo;
-	
+	int cont=0;
 	Conexion conexion=new Conexion();
 	Connection cn=conexion.conectar();
+	public static DefaultTableModel modelo;
 	
 	public Pedidodelivery(){
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Pedido Mostrador");
 		this.getContentPane().setBackground(Color.GRAY);
-		this.setSize(550, 690);
+		this.setSize(550, 800);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		InicioComponentes();
@@ -48,8 +49,6 @@ public class Pedidodelivery extends JFrame{
 		ColocarEtiquetas();
 		Colocarbotones();
 		ColocarCombos();
-		Colocarspinner();
-		Colocartextos();
 	}
 	
 	public void Colocarpaneles() {
@@ -61,31 +60,35 @@ public class Pedidodelivery extends JFrame{
 	
 	public void ColocarEtiquetas() {
 		JLabel categoria=new JLabel("Categoria");
-		categoria.setBounds(40, 40, 200, 50);
+		categoria.setBounds(55, 40, 200, 50);
 		categoria.setForeground(Color.BLACK);
 		categoria.setFont(new Font("arial",Font.PLAIN, 15));
 		JLabel producto=new JLabel("Productos");
-		producto.setBounds(40, 80, 200, 50);
+		producto.setBounds(55, 80, 200, 50);
 		producto.setForeground(Color.BLACK);
 		producto.setFont(new Font("arial",Font.PLAIN, 15));
 		JLabel cantidad=new JLabel("Cantidad");
-		cantidad.setBounds(40, 120, 200, 50);
+		cantidad.setBounds(55, 120, 200, 50);
 		cantidad.setForeground(Color.BLACK);
 		cantidad.setFont(new Font("arial",Font.PLAIN, 15));
 		JLabel Nombrecliente=new JLabel("Cliente");
-		Nombrecliente.setBounds(40, 170, 200, 50);
+		Nombrecliente.setBounds(55, 170, 200, 50);
 		Nombrecliente.setForeground(Color.BLACK);
 		Nombrecliente.setFont(new Font("arial",Font.PLAIN, 15));
 		JLabel dni=new JLabel("DNI");
-		dni.setBounds(40, 202, 200, 50);
+		dni.setBounds(55, 202, 200, 50);
 		dni.setForeground(Color.BLACK);
 		dni.setFont(new Font("arial",Font.PLAIN, 15));
 		JLabel telefono=new JLabel("Telefono");
-		telefono.setBounds(40, 230, 200, 50);
+		telefono.setBounds(55, 230, 200, 50);
 		telefono.setForeground(Color.BLACK);
 		telefono.setFont(new Font("arial",Font.PLAIN, 15));
-		JLabel direccion=new JLabel("Direccion");
-		direccion.setBounds(40, 264, 200, 50);
+		JLabel metodo_pago=new JLabel("Metodo de pago");
+		metodo_pago.setBounds(55, 293, 200, 50);
+		metodo_pago.setForeground(Color.BLACK);
+		metodo_pago.setFont(new Font("arial",Font.PLAIN, 15));
+		JLabel direccion=new JLabel("Domicilio");
+		direccion.setBounds(55, 262, 200, 50);
 		direccion.setForeground(Color.BLACK);
 		direccion.setFont(new Font("arial",Font.PLAIN, 15));
 		panel.add(categoria);
@@ -94,29 +97,18 @@ public class Pedidodelivery extends JFrame{
 		panel.add(Nombrecliente);
 		panel.add(dni);
 		panel.add(telefono);
+		panel.add(metodo_pago);
 		panel.add(direccion);
 	}
 	
 	
 	
 	public void Colocarbotones() {
-		JButton Agregarpedido=new JButton("Aceptar");
-		Agregarpedido.setBounds(90, 550, 100, 30);
-		Agregarpedido.setForeground(Color.BLACK);
-		Agregarpedido.setFont(new Font("arial", Font.BOLD, 15));
 		JButton Cancelarpedido=new JButton("Cancelar");
-		Cancelarpedido.setBounds(200, 550, 100, 30);
+		Cancelarpedido.setBounds(280, 540, 100, 30);
+		Cancelarpedido.setForeground(Color.BLACK);
 		Cancelarpedido.setFont(new Font("arial", Font.BOLD, 15));
-		panel.add(Agregarpedido);
 		panel.add(Cancelarpedido);
-	
-		ActionListener desplegador=new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent ae){
-				dispose();
-			}
-			};
-			Agregarpedido.addActionListener(desplegador);
 			
 			ActionListener desplegador2=new ActionListener() {
 				@Override
@@ -125,46 +117,199 @@ public class Pedidodelivery extends JFrame{
 				}
 				};
 				Cancelarpedido.addActionListener(desplegador2);
-			
 	}
 	
 	public void ColocarCombos(){	
 		JButton agregar=new JButton("Agregar");
-		agregar.setBounds(400, 240, 100, 40);
+		agregar.setBounds(222, 334, 100, 30);
 		agregar.setFont(new Font("arial", Font.BOLD, 15));
 		panel.add(agregar);
-		final JLabel productoelegido=new JLabel("");
-		productoelegido.setBounds(40, 315, 200, 20);
-		productoelegido.setFont(new Font("arial", Font.BOLD, 12));
-		panel.add(productoelegido);
-		final JComboBox<String> c=new JComboBox<String>();
-		final JComboBox<String> p=new JComboBox<String>();
-		p.setBounds(145, 95, 220, 20);
-		c.setBounds(145, 55, 100, 20);
+		final JComboBox c=new JComboBox();
+		final JComboBox p=new JComboBox();
+		p.setBounds(175, 95, 220, 20);
+		c.setBounds(175, 55, 100, 20);
 		c.setSelectedItem(null);
 		p.setSelectedItem(null);
 		panel.add(c);
 		panel.add(p);
-		final DefaultComboBoxModel<String> combo=new DefaultComboBoxModel<String>();
-		final DefaultComboBoxModel<String> combo2=new DefaultComboBoxModel<String>();
+		final DefaultComboBoxModel combo=new DefaultComboBoxModel();
+		final DefaultComboBoxModel combo2=new DefaultComboBoxModel();
 		c.setModel(combo);
 		p.setModel(combo2);
 		final Listadocategoria listado=new Listadocategoria();
 		final Listadoproductos listado2=new Listadoproductos();
-		modelo=new DefaultTableModel();
-		scroll=new JScrollPane();
-		String pedido[]={"Producto", "Cantidad", "Precio"};
-		tabla=new JTable(modelo);
-		modelo.setColumnIdentifiers(pedido);
-		tabla.setBounds(8, 320, 530, 200);
-		scroll.setBounds(8, 320, 530, 200);
-		scroll.setViewportView(tabla);
-		panel.add(scroll);
 		final JSpinner cantidad=new JSpinner();
-		cantidad.setBounds(145, 135, 100, 25);
+		cantidad.setBounds(175, 135, 100, 25);
 		cantidad.setModel(new SpinnerNumberModel(0, 0, 100, 1));
 		panel.add(cantidad);
+		final DefaultTableModel modelo=new DefaultTableModel();
+		JScrollPane scroll=new JScrollPane();
+		final JTable tabla=new JTable(modelo);
+		String pedido[]={"Producto", "Cantidad", "Precio"};
+		modelo.setColumnIdentifiers(pedido);
+		tabla.setBounds(8, 370, 530, 150);
+		scroll.setBounds(8, 370, 530, 150);
+		scroll.setViewportView(tabla);
+		panel.add(scroll);
+		final JLabel totalLabel = new JLabel("Total: $0");
+		totalLabel.setBounds(410, 530, 100, 50);
+		totalLabel.setFont(new Font("arial", Font.BOLD, 17));
+		panel.add(totalLabel);
+		JButton Agregarpedido=new JButton("Aceptar");
+		Agregarpedido.setBounds(170, 540, 100, 30);
+		Agregarpedido.setForeground(Color.BLACK);
+		Agregarpedido.setFont(new Font("arial", Font.BOLD, 15));
+		panel.add(Agregarpedido);
+		final JTextField cliente=new JTextField();
+		cliente.setBounds(175, 185, 200, 25);
+		cliente.setForeground(Color.BLACK);
+		cliente.setFont(new Font("arial", Font.BOLD, 15));
+		final JTextField dni=new JTextField();
+		dni.setBounds(175, 215, 200, 25);
+		dni.setForeground(Color.BLACK);
+		dni.setFont(new Font("arial", Font.BOLD, 15));
+		final JTextField telefono=new JTextField();
+		telefono.setBounds(175, 245, 200, 25);
+		telefono.setForeground(Color.BLACK);
+		telefono.setFont(new Font("arial", Font.BOLD, 15));
+		final JTextField codigo_pago=new JTextField();
+		codigo_pago.setBounds(175, 275, 200, 25);
+		codigo_pago.setForeground(Color.BLACK);
+		codigo_pago.setFont(new Font("arial", Font.BOLD, 15));
+		final JTextField direccion=new JTextField();
+		direccion.setBounds(175, 305, 200, 25);
+		direccion.setForeground(Color.BLACK);
+		direccion.setFont(new Font("arial", Font.BOLD, 15));
+		JButton Borrarpedido=new JButton("Borrar");
+		Borrarpedido.setBounds(400, 334, 100, 30);
+		Borrarpedido.setForeground(Color.BLACK);
+		Borrarpedido.setFont(new Font("arial", Font.BOLD, 15));
+		panel.add(cliente);
+		panel.add(dni);
+		panel.add(telefono);
+		panel.add(codigo_pago);
+		panel.add(direccion);
+		panel.add(Borrarpedido);
 		
+		ActionListener desplegador4=new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent ae){
+				int filaSeleccionada = tabla.getSelectedRow();
+				
+				 if (filaSeleccionada >= 0){
+					 modelo.removeRow(filaSeleccionada);
+					 totalLabel.setText("Total: $0");
+				 }
+			}
+			};
+			Borrarpedido.addActionListener(desplegador4);
+			
+		ActionListener desplegador = new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent ae) {
+		    	
+		        try {
+		            Conexion con = new Conexion();
+		            Connection Conexion = con.conectar();
+		            
+		            // Insertar datos del cliente en la tabla "CLIENTES"
+		            String sqlCliente = "INSERT INTO CLIENTES(Nom_ape, direccion, Cod_pago, telefono, DNI) VALUES (?, ?, ?, ?, ?)";
+		            PreparedStatement psCliente = Conexion.prepareStatement(sqlCliente);
+		            psCliente.setString(1, cliente.getText());
+		            psCliente.setString(2,	direccion.getText());
+		            psCliente.setString(3, codigo_pago.getText());
+		            psCliente.setString(4, telefono.getText());
+		            psCliente.setString(5, dni.getText());
+		            psCliente.execute();
+
+		            // Obtener el ID del cliente recién insertado
+		            int idCliente = -1; // Valor predeterminado si no se puede obtener el ID
+		            String sqlObtenerIdCliente = "SELECT ID_CLIENTE FROM CLIENTES WHERE Nom_ape = ? AND direccion=? AND Cod_pago = ? AND telefono = ? AND DNI = ?";
+		            PreparedStatement psObtenerIdCliente = Conexion.prepareStatement(sqlObtenerIdCliente);
+		            psObtenerIdCliente.setString(1, cliente.getText());
+		            psObtenerIdCliente.setString(2, direccion.getText());
+		            psObtenerIdCliente.setString(3, codigo_pago.getText());
+		            psObtenerIdCliente.setString(4, telefono.getText());
+		            psObtenerIdCliente.setString(5, dni.getText());
+		            ResultSet rsIdCliente = psObtenerIdCliente.executeQuery();
+		            if (rsIdCliente.next()) {
+		                idCliente = rsIdCliente.getInt("ID_CLIENTE");
+		            }
+		            String Datos[]=new String[7];
+		            String sqlPedido = "INSERT INTO PEDIDOS(tipo_pedido, producto, cantidad, id_stock, id_cliente, total) VALUES (?, ?, ?, ?, ?, ?)";
+	                PreparedStatement psPedido = Conexion.prepareStatement(sqlPedido);
+		            // Insertar datos en la tabla "PEDIDOS"
+	                for (int i = 0; i < tabla.getRowCount(); i++) {
+	                    String producto = tabla.getValueAt(i, 0).toString();
+	                    String cantidad = tabla.getValueAt(i, 1).toString();
+	                    String precio = tabla.getValueAt(i, 2).toString();
+	                    
+	                    Conexion cn=new Conexion();
+			    		Connection Conexion1=cn.conectar();
+			   		  
+	
+	                    // Aquí ejecuta la consulta para obtener el ID del producto
+	                    String sqlObtenerIdProducto = "SELECT s.id_productos FROM stock AS s " +
+	                        "LEFT JOIN productos AS p ON s.id_productos = p.id_producto " +
+	                        "WHERE p.descripcion = ?";
+	                    PreparedStatement psObtenerIdProducto = Conexion1.prepareStatement(sqlObtenerIdProducto);
+	                    psObtenerIdProducto.setString(1, producto);
+	                    ResultSet rsIdProducto = psObtenerIdProducto.executeQuery();
+
+	                    if (rsIdProducto.next()) {
+	                        String idProducto = rsIdProducto.getString("id_productos");
+
+	                        // Luego, inserta los datos en la tabla de pedidos
+	                        psPedido.setString(1, "Delivery");
+	                        psPedido.setString(2, producto);
+	                        psPedido.setString(3, cantidad);
+	                        psPedido.setString(4, idProducto);
+	                        psPedido.setInt(5, idCliente);
+	                        psPedido.setString(6, precio);
+	                        psPedido.execute();
+	                    }
+	                
+	                    String sqlObtenerCodPedidos = "SELECT max(cod_pedidos) FROM pedidos";
+	                    String productoSeleccionado = tabla.getValueAt(i, 0).toString(); // Asegúrate de que el valor de p.getSelectedItem() sea una cadena válida
+	                    String sqlObtenerstock = "SELECT P.ID_STOCK FROM PEDIDOS P " +
+	                        "JOIN PRODUCTOS PR ON P.PRODUCTO = PR.Descripcion " +
+	                        "JOIN STOCK S ON PR.ID_PRODUCTO = S.id_productos " +
+	                        "WHERE P.PRODUCTO = '" + productoSeleccionado + "'";
+	                    String sqlObtenercliente = "SELECT max(id_cliente) FROM pedidos";
+	                    Statement st2 = Conexion.createStatement();
+	                    ResultSet rs2 = st2.executeQuery(sqlObtenerCodPedidos);
+	                    Statement st3 = Conexion.createStatement();
+	                    ResultSet rs3 = st3.executeQuery(sqlObtenerstock);
+	                    Statement st4 = Conexion.createStatement();
+	                    ResultSet rs4 = st4.executeQuery(sqlObtenercliente);
+
+	                    if (rs2.next() && rs3.next() && rs4.next()) {
+	                        int codPedidos = rs2.getInt(1);
+	                        int codstock = rs3.getInt(1);
+	                        int codcliente = rs4.getInt(1);
+	                        Datos[0] = String.valueOf(codPedidos);
+	                        Datos[1] = "Delivery";
+	                        Datos[2] = tabla.getValueAt(i, 0).toString();
+	                        Datos[3] = tabla.getValueAt(i, 1).toString();
+	                        Datos[4] = String.valueOf(codstock);
+	                        Datos[5] = String.valueOf(codcliente);
+	                        Datos[6] = tabla.getValueAt(i, 2).toString();
+	                        Ventanalistas.modelo.addRow(Datos);
+	                    }
+	                }
+
+		            JOptionPane.showMessageDialog(null, "Registro exitoso");
+		        } catch (Exception e) {
+		            JOptionPane.showMessageDialog(null, "Error " + e.getMessage());
+		        }
+		        dispose();
+		    }
+		};
+		Agregarpedido.addActionListener(desplegador);
+
+		
+			
+			
 		try{
 			java.sql.Statement st=cn.createStatement();
 			ResultSet rs=st.executeQuery("Select categoria from categorias");
@@ -194,7 +339,7 @@ public class Pedidodelivery extends JFrame{
 							combo2.addElement(producto.getDescripcion());
 						}
 					} catch(Exception r){
-						
+
 					}
 				}
 				else if(categoriaseleccionada.equals("Pizzas")){
@@ -209,7 +354,7 @@ public class Pedidodelivery extends JFrame{
 							combo2.addElement(producto.getDescripcion());
 						}
 					} catch(Exception r){
-						
+
 					}
 				}
 				else if(categoriaseleccionada.equals("Bebidas")){
@@ -227,45 +372,18 @@ public class Pedidodelivery extends JFrame{
 
 					}
 				}
-				else if(categoriaseleccionada.equals("Sandwiches")){
-					p.removeAllItems();
-					try{
-						java.sql.Statement st=cn.createStatement();
-						ResultSet rs=st.executeQuery("Select descripcion from productos where id_categorias=4");
-						while(rs.next()){
-							Producto producto=new Producto();
-							producto.setDescripcion(rs.getString(1)); 
-							listado2.Agregarproductos(producto);
-							combo2.addElement(producto.getDescripcion());
-						}
-					} catch(Exception r){
-						
-					}
-				}
-				else if(categoriaseleccionada.equals("Panchos")){
-					p.removeAllItems();
-					try{
-						java.sql.Statement st=cn.createStatement();
-						ResultSet rs=st.executeQuery("Select descripcion from productos where id_categorias=5");
-						while(rs.next()){
-							Producto producto=new Producto();
-							producto.setDescripcion(rs.getString(1)); 
-							listado2.Agregarproductos(producto);
-							combo2.addElement(producto.getDescripcion());
-						}
-					} catch(Exception r){
-
-					}
-				}
 			}
 			
 		}
 		);
+		
 		ActionListener desplegador3 = new ActionListener() {
 		    @Override
 		    public void actionPerformed(ActionEvent ae) {
 		        String producto = String.valueOf(p.getSelectedItem().toString());
 		        Integer cantidadproducto = Integer.parseInt((String) cantidad.getValue().toString());
+		        
+		        if(cantidadproducto>0){
 		        try {
 		            java.sql.Statement st = cn.createStatement();
 		            ResultSet rs = st.executeQuery("SELECT precio FROM productos WHERE descripcion = '" + producto + "'");
@@ -288,11 +406,17 @@ public class Pedidodelivery extends JFrame{
 		                        break;
 		                    }
 		                }
+		               
 
 		                if (!productoEncontrado) {
 		                    // Producto no encontrado en la tabla, agregar una nueva fila
 		                    modelo.addRow(new Object[]{producto, cantidadproducto, monto});
 		                }
+		                int total = 0;
+	                    for (int i = 0; i < modelo.getRowCount(); i++) {
+	                        total += Integer.parseInt(modelo.getValueAt(i, 2).toString());
+	                    }
+	                    totalLabel.setText("Total: $" + total);
 		            }
 		        } catch (Exception r) {
 		            r.printStackTrace();
@@ -301,40 +425,13 @@ public class Pedidodelivery extends JFrame{
 		        p.setSelectedItem("");
 		        cantidad.setValue(0);
 		    }
+		    }
 		};
 		agregar.addActionListener(desplegador3);
+
 			
 		
 	}
 	
-	public void Colocarspinner(){
-		JSpinner cantidad=new JSpinner();
-		cantidad.setBounds(145, 135, 100, 25);
-		cantidad.setModel(new SpinnerNumberModel(0, 0, 100, 1));
-		panel.add(cantidad);
-	}
-	
-	public void Colocartextos(){
-		JTextField cliente=new JTextField();
-		cliente.setBounds(145, 185, 200, 25);
-		cliente.setForeground(Color.BLACK);
-		cliente.setFont(new Font("arial", Font.BOLD, 15));
-		JTextField dni=new JTextField();
-		dni.setBounds(145, 215, 200, 25);
-		dni.setForeground(Color.BLACK);
-		dni.setFont(new Font("arial", Font.BOLD, 15));
-		JTextField telefono=new JTextField();
-		telefono.setBounds(145, 245, 200, 25);
-		telefono.setForeground(Color.BLACK);
-		telefono.setFont(new Font("arial", Font.BOLD, 15));
-		JTextField direccion=new JTextField();
-		direccion.setBounds(145, 275, 200, 25);
-		telefono.setForeground(Color.BLACK);
-		direccion.setFont(new Font("arial", Font.BOLD, 15));
-		panel.add(cliente);
-		panel.add(dni);
-		panel.add(telefono);
-		panel.add(direccion);
-	}
 
 }
