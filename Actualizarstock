@@ -1,0 +1,76 @@
+package Datalive;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class Actualizarstock extends JFrame {
+	private static final long serialVersionUID = 1L;
+	private JPanel panel;
+    private JTextField txtIdProducto;
+    private JTextField txtNuevaCantidad;
+
+    public Actualizarstock() {
+        setTitle("Actualizar Stock");
+        setSize(400, 250);
+        this.setResizable(false);
+		this.setLocationRelativeTo(null);
+        panel = new JPanel();
+        panel.setLayout(null);
+        this.getContentPane().add(panel);
+
+        JLabel lblIdProducto = new JLabel("ID del Producto:");
+        lblIdProducto.setBounds(20, 20, 150, 25);
+        panel.add(lblIdProducto);
+
+        txtIdProducto = new JTextField();
+        txtIdProducto.setBounds(180, 20, 150, 25);
+        panel.add(txtIdProducto);
+
+        JLabel lblNuevaCantidad = new JLabel("Nueva Cantidad:");
+        lblNuevaCantidad.setBounds(20, 60, 150, 25);
+        panel.add(lblNuevaCantidad);
+
+        txtNuevaCantidad = new JTextField();
+        txtNuevaCantidad.setBounds(180, 60, 150, 25);
+        panel.add(txtNuevaCantidad);
+
+        JButton btnActualizar = new JButton("Actualizar");
+        btnActualizar.setBounds(120, 100, 150, 40);
+        panel.add(btnActualizar);
+
+        btnActualizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarStock();
+                dispose();
+            }
+        });
+    }
+
+    private void actualizarStock() {
+        int idProducto = Integer.parseInt(txtIdProducto.getText());
+        int nuevaCantidad = Integer.parseInt(txtNuevaCantidad.getText());
+
+        Conexion con = new Conexion();
+        try {
+            Connection conexion = con.conectar();
+            String sql = "UPDATE STOCK SET CANTIDAD_STOCK = ? WHERE ID_PRODUCTOS = ?";
+            PreparedStatement stmt = conexion.prepareStatement(sql);
+            stmt.setInt(1, nuevaCantidad);
+            stmt.setInt(2, idProducto);
+            stmt.executeUpdate();
+            stmt.close();
+            conexion.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
