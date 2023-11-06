@@ -13,8 +13,8 @@ import javax.swing.JPanel;
 public class Ventanacierredecaja extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public JPanel panel;
-	public static int total3=1;
-	public static int total4=1;
+	public static int total3;
+	public static int total4;
 	public static boolean bool=false;
 	public static boolean bool2=false;
 	
@@ -71,7 +71,7 @@ public class Ventanacierredecaja extends JFrame {
 			}
 			};
 			setmontodia.addActionListener(desplegador);
-			
+			bool=false;
 		
 		ActionListener desplegador2=new ActionListener() {
 			@Override
@@ -85,6 +85,7 @@ public class Ventanacierredecaja extends JFrame {
 			}
 			};
 			setmontosemana.addActionListener(desplegador2);
+			bool2=false;
     }
     
 }
