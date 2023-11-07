@@ -84,11 +84,11 @@ public class Pedidodelivery extends JFrame{
 		telefono.setForeground(Color.BLACK);
 		telefono.setFont(new Font("arial",Font.PLAIN, 15));
 		JLabel metodo_pago=new JLabel("Metodo de pago");
-		metodo_pago.setBounds(55, 293, 200, 50);
+		metodo_pago.setBounds(55, 262, 200, 50);
 		metodo_pago.setForeground(Color.BLACK);
 		metodo_pago.setFont(new Font("arial",Font.PLAIN, 15));
 		JLabel direccion=new JLabel("Domicilio");
-		direccion.setBounds(55, 262, 200, 50);
+		direccion.setBounds(55, 293, 200, 50);
 		direccion.setForeground(Color.BLACK);
 		direccion.setFont(new Font("arial",Font.PLAIN, 15));
 		panel.add(categoria);
