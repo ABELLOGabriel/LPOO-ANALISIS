@@ -49,8 +49,8 @@ CREATE TABLE PRODUCTOS(
 
 INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (1, 'Empanada de Carne', 150);
 INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (1, 'Empanada de Pollo', 150);
-INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (1, 'Empanada de Jamón y Queso', 180);
-INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (1, 'Empanda de Champiñones', 130);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (1, 'Empanada de Jamon y Queso', 180);
+INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (1, 'Empanda de Champiniones', 130);
 INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (1, 'Empanada de Espinacas', 140);
 INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (2, 'Pizza Margarita', 200);
 INSERT INTO PRODUCTOS (id_categorias, Descripcion, PRECIO) VALUES (2, 'Pizza Pepperoni', 250);
@@ -107,5 +107,4 @@ CREATE TABLE PEDIDOS(
 	foreign key(id_stock) references stock(id_stock),
 	foreign key(id_cliente) references clientes(id_cliente)
 );
-
 
