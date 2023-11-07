@@ -21,7 +21,6 @@ public class Ventanalistas extends JFrame{
 	public JPanel panel;
 	public static DefaultTableModel modelo;
 	private int totalSum;
-	private int totalsemana;
 	
 	
 	@SuppressWarnings("static-access")
@@ -152,7 +151,6 @@ public class Ventanalistas extends JFrame{
 	 		        for (int fila : filasSeleccionadas) {
 	 		            int totalValue = Integer.parseInt(modelo.getValueAt(fila, 6).toString()); 
 	 		            totalSum += totalValue;
-	 		            totalsemana+=totalSum;
 	 		        }
 	 				modelo.removeRow(filaSeleccionada);
 	 			}
@@ -167,11 +165,7 @@ public class Ventanalistas extends JFrame{
 		 			if (Ventanacierredecaja.bool == true) {
 		 	            totalSum = 0;
 		 	        }
-		 			else if (Ventanacierredecaja.bool2 == true) {
-		 	            totalsemana = 0;
-		 	            totalSum=0;
-		 	        }
-		 			Ventanacierredecaja cierredecaja=new Ventanacierredecaja(totalSum, totalsemana);
+		 			Ventanacierredecaja cierredecaja=new Ventanacierredecaja(totalSum);
 		 			cierredecaja.setVisible(true);
 		 		}
 		 			
