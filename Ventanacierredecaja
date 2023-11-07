@@ -14,21 +14,19 @@ public class Ventanacierredecaja extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public JPanel panel;
 	public static int total3;
-	public static int total4;
 	public static boolean bool=false;
-	public static boolean bool2=false;
 	
-	public Ventanacierredecaja(int total, int total2) {
+	public Ventanacierredecaja(int total) {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setTitle("Cierre de Caja");
         setSize(500, 300); 
         setLocationRelativeTo(null);
-        InicioComponentes(total, total2);
+        InicioComponentes(total);
     }
 
-    public void InicioComponentes(int total, int total2) {
+    public void InicioComponentes(int total) {
         Colocarpaneles();
-        Colocarbotones(total, total2);
+        Colocarbotones(total);
     }
     
     public void Colocarpaneles(){
@@ -39,27 +37,17 @@ public class Ventanacierredecaja extends JFrame {
         
     }
     
-    public void Colocarbotones(int total, int total2){
+    public void Colocarbotones(int total){
     	final JLabel montodia=new JLabel("Monto del dia: $"+ total);
     	montodia.setBounds(40, 40, 200, 60);
     	montodia.setForeground(Color.BLACK);
 		montodia.setFont(new Font("arial",Font.PLAIN, 20));
-		final JLabel montosemana=new JLabel("Monto de la semana: $"+total2);
-		montosemana.setBounds(40, 80, 300, 60);
-		montosemana.setForeground(Color.BLACK);
-		montosemana.setFont(new Font("arial",Font.PLAIN, 20));
 		JButton setmontodia=new JButton("Reiniciar monto dia");
 		setmontodia.setBounds(40, 140, 180, 60);
 		setmontodia.setForeground(Color.BLACK);
 		setmontodia.setFont(new Font("arial",Font.PLAIN, 17));
-		JButton setmontosemana=new JButton("Reiniciar monto semana");
-		setmontosemana.setBounds(250, 140, 220, 60);
-		setmontosemana.setForeground(Color.BLACK);
-		setmontosemana.setFont(new Font("arial",Font.PLAIN, 17));
 		panel.add(montodia);
-		panel.add(montosemana);
 		panel.add(setmontodia);
-		panel.add(setmontosemana);
 		ActionListener desplegador=new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent ae){
@@ -73,19 +61,7 @@ public class Ventanacierredecaja extends JFrame {
 			setmontodia.addActionListener(desplegador);
 			bool=false;
 		
-		ActionListener desplegador2=new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent ae){
-				bool2=true;
-				if(bool2==true)
-				{
-					total4=0;
-					montosemana.setText("Monto de la semana: $"+ total4);
-				}
-			}
-			};
-			setmontosemana.addActionListener(desplegador2);
-			bool2=false;
     }
+    
     
 }
