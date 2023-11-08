@@ -38,7 +38,7 @@ public class Pedidomostrador extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("Pedido Mostrador");
 		this.getContentPane().setBackground(Color.GRAY);
-		this.setSize(550, 750);
+		this.setSize(550, 690);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		InicioComponentes();
