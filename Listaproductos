@@ -53,11 +53,11 @@ public class Listaproductos extends JFrame{
 	
 	public void Colocarboton(){
 		JButton precio=new JButton("Actualizar precio");
-		precio.setBounds(1340, 150, 240, 40);
+		precio.setBounds(980, 80, 240, 40);
 		precio.setForeground(Color.BLACK);
 		precio.setFont(new Font("arial", Font.BOLD, 20));
 		JButton regresar=new JButton("Regresar");
-		regresar.setBounds(40, 750, 150, 60);
+		regresar.setBounds(30, 630, 150, 30);
 		regresar.setForeground(Color.BLACK);
 		regresar.setFont(new Font("arial", Font.BOLD, 20));
 		panel.add(precio);
@@ -88,8 +88,8 @@ public class Listaproductos extends JFrame{
 		JTable tabla=new JTable(modelo);
 		String Productos[]={"Id Producto", "Id Categorias", "Descripcion", "Precio"};
 		modelo.setColumnIdentifiers(Productos);
-		tabla.setBounds(295, 150, 1000, 450);
-		scroll.setBounds(295, 150, 1000, 450);
+		tabla.setBounds(220, 150, 1000, 430);
+		scroll.setBounds(220, 150, 1000, 430);
 		scroll.setViewportView(tabla);
 		panel.add(scroll);
 		
