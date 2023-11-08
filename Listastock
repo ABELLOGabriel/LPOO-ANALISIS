@@ -53,11 +53,11 @@ public class Listastock extends JFrame{
 	
 	public void Colocarbotones(){
 		JButton stock=new JButton("Actualizar stock");
-		stock.setBounds(1340, 150, 240, 40);
+		stock.setBounds(980, 80, 240, 40);
 		stock.setForeground(Color.BLACK);
 		stock.setFont(new Font("arial", Font.BOLD, 20));
 		JButton regresar=new JButton("Regresar");
-		regresar.setBounds(40, 750, 150, 60);
+		regresar.setBounds(30, 630, 150, 30);
 		regresar.setForeground(Color.BLACK);
 		regresar.setFont(new Font("arial", Font.BOLD, 20));
 		panel.add(stock);
